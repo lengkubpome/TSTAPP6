@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit {
         this._unsubscribeAll = new Subject();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource.data = demo_products;
     }
 }
