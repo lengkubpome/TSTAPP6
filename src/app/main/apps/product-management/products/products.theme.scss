@@ -1,0 +1,32 @@
+@mixin app-product-theme($theme) {
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    app-product-shell {
+        
+    }
+
+    app-product-list {
+        .header {
+
+            .search-wrapper {
+                background: map-get($background, card);
+
+                .search {
+
+                    .mat-icon {
+                        color: map-get($foreground, icon);
+                    }
+
+                    input {
+                        background: map-get($background, card);
+                        color: map-get($foreground, text);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// }

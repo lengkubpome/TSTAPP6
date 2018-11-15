@@ -5,8 +5,8 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 const routes = [
     {
-        path        : 'e-commerce',
-        loadChildren: './e-commerce/e-commerce.module#EcommerceModule'
+        path        : 'product-management',
+        loadChildren: './product-management/product-management.module#ProductManagementModule'
     },
 ];
 

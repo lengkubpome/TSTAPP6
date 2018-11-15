@@ -33,14 +33,14 @@ export const navigation: FuseNavigation[] = [
                         id: 'products',
                         title: 'Products',
                         type: 'item',
-                        url: '/sample',
+                        url: '/apps/product-management/products',
                         exactMatch: true
                     },
                     {
                         id: 'product-inventory',
                         title: 'Inventory',
                         type: 'item',
-                        url: '/sample',
+                        url: '/apps/product-management/inventory',
                         exactMatch: true
                     }
                 ]
@@ -48,18 +48,19 @@ export const navigation: FuseNavigation[] = [
         ]
     },
     {
-        id: 'management',
-        title: 'Managements',
-        translate: 'NAV.MANAGEMENTS',
+        id: 'administration',
+        title: 'Administration',
+        translate: 'NAV.ADMINISTRATION',
         type: 'group',
         children: [
             {
-                id: 'admin-user',
-                title: 'Admin & User',
+                id: 'account-management',
+                title: 'Account Management',
                 // translate: 'NAV.USERS',
                 type: 'item',
                 icon: 'supervisor_account',
-                url: '/sample',
+                url: '/',
+                exactMatch: true
                
             },
         ]

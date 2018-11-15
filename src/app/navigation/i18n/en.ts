@@ -10,8 +10,8 @@ export const locale = {
                 'BADGE': '25'
             },
 
-            // Managements
-            'MANAGEMENTS': 'Managements',
+            // Administration
+            'ADMINISTRATION': 'Administration',
         }
     }
 };
