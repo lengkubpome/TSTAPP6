@@ -21,7 +21,8 @@ import {
     MatSortModule,
     MatSnackBarModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -51,6 +52,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         MatSnackBarModule,
         MatTableModule,
         MatTabsModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
 
         NgxChartsModule
     ],
@@ -78,6 +81,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
          MatSnackBarModule,
          MatTableModule,
          MatTabsModule,
+         MatFormFieldModule,
+         MatDatepickerModule,
 
          NgxChartsModule
     ]

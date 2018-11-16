@@ -3,11 +3,7 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
-    // app-product-shell {
-        
-    // }
-
-    app-product-list {
+    app-product-list, app-product-detail {
         .header {
 
             .search-wrapper {

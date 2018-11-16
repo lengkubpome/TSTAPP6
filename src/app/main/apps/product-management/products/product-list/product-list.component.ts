@@ -1,4 +1,3 @@
-import { demo_products } from './../../../model/product.model';
 import { Subject } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import {
@@ -9,7 +8,8 @@ import {
     ElementRef
 } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Product } from '../../../model/product.model';
+import { Product, demo_products } from '../model/product.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-product-list',
@@ -39,12 +39,20 @@ export class ProductListComponent implements OnInit {
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    constructor() {
+    constructor(private router: Router) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
     ngOnInit(): void {
         this.dataSource.data = demo_products;
+    }
+
+    newProduct(): void {}
+
+    selectProduct(productId: string): void {
+        console.log(productId);
+        
+        this.router.navigate(['/apps/product-management/products/', productId]);
     }
 }

@@ -1,0 +1,184 @@
+<div id="product" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/product-management/products'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <!-- <div class="product-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                    <img *ngIf="product.images[0]" [src]="product.images[0].url">
+                    <img *ngIf="!product.images[0]" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                </div> -->
+
+                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="pageType ==='edit'">
+                        <!-- {{product.name}} -->
+                        Product Name
+                    </div>
+                    <div class="h2" *ngIf="pageType ==='new'">
+                        New Product
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>Product Code</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button class="save-product-button"[@animate]="{value:'*',params:{delay:'100ms',x:'25px'}}">
+                <mat-icon>edit</mat-icon> &nbsp;
+                <span>EDIT</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <form name="productForm" class="product w-100-p" fxLayout="column" fxFlex>
+
+                    <mat-tab-group>
+
+                        <mat-tab label="Basic Info">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column" fxLayoutAlign="start">
+
+                                <!-- <div class="h2 mb-24">Reactive Form Example</div> -->
+                                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+                                    <mat-form-field appearance="outline" class="w-100-p mr-8">
+                                        <mat-label>Product Name</mat-label>
+                                        <input matInput placeholder="Please enter the information ">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Product Code</mat-label>
+                                        <input matInput placeholder="Please enter the information ">
+                                    </mat-form-field>
+                                </div>
+                                <!-- 
+                                <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-label>Product Description</mat-label>
+                                    <textarea matInput placeholder="Product Description" rows="3"></textarea>
+                                </mat-form-field> -->
+
+                                <div fxLayout="row" fxLayoutAlign="space-between start">
+                                    <mat-form-field appearance="outline" class="w-100-p">
+                                        <mat-label>Price</mat-label>
+                                        <input matInput placeholder="Please enter the information " disabled>
+                                    </mat-form-field>
+                                </div>
+                                <!-- Button Edit -->
+                                <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px">
+                                    <button mat-flat-button color="primary">Primary</button>
+                                    <button mat-flat-button color="accent">Accent</button>
+                                </div>
+
+                            </div>
+
+                        </mat-tab>
+
+                        <!-- Price History -->
+                        <mat-tab label="Price History" *ngIf="pageType ==='edit'">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+
+                                <div class="section pb-48">
+                                    <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                                        <div class="datepickers" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                                            <mat-form-field color="accent" fxFlex="100" >
+                                                <mat-label>From Date</mat-label>
+                                                <input matInput [matDatepicker]="picker1">
+                                                <mat-datepicker-toggle matPrefix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+
+                                            <mat-form-field color="accent" fxFlex="100">
+                                                <mat-label>To Date</mat-label>
+                                                <input matInput [matDatepicker]="picker2">
+                                                <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <mat-form-field appearance="" class="m-0">
+                                            <input matInput placeholder="Search">
+                                            <span matSuffix>
+                                                <mat-icon>search</mat-icon> &nbsp;
+                                            </span>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <mat-table class="products-table" #table [dataSource]="dataSource" matSort
+                                        [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+
+                                        <!-- Code Column -->
+                                        <ng-container matColumnDef="productCode">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+                                            <mat-cell *matCellDef="let product">
+                                                <p class="text-truncate">{{product.productCode}}</p>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Category Column -->
+                                        <ng-container matColumnDef="productName">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                                            <mat-cell *matCellDef="let product">
+                                                <p class="text-truncate">{{product.productName}}</p>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <!-- Price Column -->
+                                        <ng-container matColumnDef="price">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                                            <mat-cell *matCellDef="let product">
+                                                <p class="price text-truncate">
+                                                    {{product.price | currency:'USD':'symbol'}}
+                                                </p>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                                        <mat-row *matRowDef="let product; columns: displayedColumns;" class="product"
+                                            matRipple>
+                                        </mat-row>
+
+                                    </mat-table>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </mat-tab>
+                        <!-- End Price History -->
+
+                    </mat-tab-group>
+
+                </form>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -3,17 +3,24 @@ import { NgModule } from '@angular/core';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProductShellComponent } from './products/container/product-shell/product-shell.component';
 import { InventoryComponent } from './inventory/inventory.component';
-import { ProductListComponent } from './products/components/product-list/product-list.component';
+import { ProductListComponent } from './products/product-list/product-list.component';
 import { FuseWidgetModule } from '@fuse/components';
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 const routes: Routes = [
     {
         path: 'products',
-        component: ProductShellComponent,
+        component: ProductListComponent,
         resolve: {
             // data: EcommerceProductsService
+        }
+    },
+    {
+        path     : 'products/:id',
+        component: ProductDetailComponent,
+        resolve  : {
+            // data: EcommerceProductService
         }
     },
     {
@@ -33,9 +40,9 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     declarations: [
-        ProductShellComponent,
         InventoryComponent,
-        ProductListComponent
+        ProductListComponent,
+        ProductDetailComponent
     ]
 })
 export class ProductManagementModule {}

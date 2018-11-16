@@ -34,11 +34,9 @@
             <!-- / SEARCH -->
 
             <!-- ADD BUTTON -->
-            <!-- <button mat-raised-button
-                    [routerLink]="'/apps/e-commerce/products/new'"
-                    class="add-product-button fuse-white mt-24 mt-md-0"> -->
             <button mat-raised-button
-                    class="add-product-button fuse-white mt-24 mt-md-0">
+                    class="add-product-button fuse-white mt-24 mt-md-0"
+                    (click)="newProduct()">
                 <span>ADD NEW PRODUCT</span>
             </button>
             <!-- / ADD BUTTON -->
@@ -55,9 +53,6 @@
                        [@animateStagger]="{value:'50'}"
                        fusePerfectScrollbar>
 
-              
-
-              
                 <!-- Code Column -->
                 <ng-container matColumnDef="productCode">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
@@ -99,7 +94,7 @@
                 <mat-row *matRowDef="let product; columns: displayedColumns;"
                          class="product"
                          matRipple
-                         [routerLink]="'/apps/e-commerce/products/'+product.id+'/'+product.handle">
+                         (click)="selectProduct(product.id)">
                 </mat-row>
 
             </mat-table>
