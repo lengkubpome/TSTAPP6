@@ -3,7 +3,7 @@ import { Product } from '../model/product.model';
 import { Action } from '@ngrx/store';
 
 export enum ProductActionTypes {
-  SELECT_PRODUCT = '[Product] Product By Id',
+  SELECT_PRODUCT = '[Product] Product Selected',
   SET_CURRENT_PRODUCT = '[Product] Set Current Product',
   CLEAR_CURRENT_PRODUCT = '[Product] Clear Current Product',
   INITIALIZE_PRODUCT = '[Product] Initialize Product',
@@ -37,12 +37,13 @@ export class LoadProductFail implements Action {
   constructor(public payload: { errorMessage: string }) {}
 }
 
-export class SelectProduct implements Action {
-  readonly type = ProductActionTypes.SELECT_PRODUCT;
-  constructor(public payload: { productId: string }) {}
-}
 
-export type ProductActions =
+export class SelectProduct implements Action {
+    readonly type = ProductActionTypes.SELECT_PRODUCT;
+    constructor(public payload: { productId: string }) {}
+  }
+
+export type PRODUCT_ACTIONS =
   | LoadProduct
   | LoadProductSuccess
   | LoadProductFail

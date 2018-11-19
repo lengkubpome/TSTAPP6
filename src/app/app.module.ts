@@ -10,7 +10,11 @@ import 'hammerjs';
 
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
+import {
+    FuseProgressBarModule,
+    FuseSidebarModule,
+    FuseThemeOptionsModule
+} from '@fuse/components';
 
 import { fuseConfig } from 'app/fuse-config';
 
@@ -19,18 +23,14 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { AppRoutingModule } from 'app/app-routing.module';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './state/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './state/effects/app.effects';
-
+import { CoreModule } from './core';
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports     : [
+    declarations: [AppComponent],
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -52,17 +52,12 @@ import { AppEffects } from './state/effects/app.effects';
         FuseSidebarModule,
         FuseThemeOptionsModule,
 
+        // Core modules
+        CoreModule,
         // App modules
         LayoutModule,
-        SampleModule,
-        StoreModule.forRoot(reducers, { metaReducers }),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
-        EffectsModule.forRoot([AppEffects])
+        SampleModule
     ],
-    bootstrap   : [
-        AppComponent
-    ]
+    bootstrap: [AppComponent]
 })
-export class AppModule
-{
-}
+export class AppModule {}

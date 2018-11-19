@@ -12,7 +12,7 @@ export const demo_products: Product[] = [
         productCode: '01',
         productName: 'เหล็กหนา',
         price: 10.2,
-        active: true
+        active: false
     },
     {
         id: '2',

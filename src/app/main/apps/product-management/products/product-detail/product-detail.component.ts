@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Product, demo_products } from '../model/product.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { FuseUtils } from '@fuse/utils';
@@ -19,6 +20,10 @@ import {
     MatSort,
     MatTabChangeEvent
 } from '@angular/material';
+import { Store, select } from '@ngrx/store';
+
+import { State } from '../../product-management.state';
+import * as fromProduct from '../state';
 
 @Component({
     selector: 'app-product-detail',
@@ -56,6 +61,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
+        private router: Router,
+        private store: Store<State>,
         private _formBuilder: FormBuilder,
         private _matSnackBar: MatSnackBar
     ) {
@@ -67,6 +74,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.store
+            .pipe(select(fromProduct.selectCurrentProduct))
+            .subscribe(p => {
+                if (p === undefined) {
+                    this.router.navigate(['/apps/product-management/products']);
+                }
+            });
+
         this.detailProductForm = this.createProductForm();
         this.productStatus = 'Active';
         this.dataSource.data = demo_products;
