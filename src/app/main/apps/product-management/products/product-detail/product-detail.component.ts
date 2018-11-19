@@ -1,11 +1,24 @@
 import { Product, demo_products } from '../model/product.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { FuseUtils } from '@fuse/utils';
 import { fuseAnimations } from '@fuse/animations';
-import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewEncapsulation,
+    OnDestroy,
+    ViewChild,
+    ElementRef
+} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import {
+    MatSnackBar,
+    MatTableDataSource,
+    MatPaginator,
+    MatSort,
+    MatTabChangeEvent
+} from '@angular/material';
 
 @Component({
     selector: 'app-product-detail',
@@ -15,13 +28,20 @@ import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular
     animations: fuseAnimations
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
+    detailProductForm: FormGroup;
 
-    displayedColumns: string[] = [
-        'productCode',
-        'productName',
-        'price'
-    ];
+    displayedColumns: string[] = ['productCode', 'productName', 'price'];
     dataSource = new MatTableDataSource<Product>();
+
+    product: Product;
+    pageType: string;
+    productForm: FormGroup;
+
+    productStatus: string;
+
+    selectedTab = 0;
+    isEditedProduct = false;
+    isChangingPrice = false;
 
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
@@ -31,10 +51,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     @ViewChild('filter')
     filter: ElementRef;
-
-    product: Product;
-    pageType: string;
-    productForm: FormGroup;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -51,8 +67,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.pageType = 'edit';
-
+        this.detailProductForm = this.createProductForm();
+        this.productStatus = 'Active';
         this.dataSource.data = demo_products;
     }
 
@@ -62,28 +78,43 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    createProductForm(): FormGroup {
-        return this._formBuilder.group({
-            id: [],
-            name: [],
-            handle: [],
-            description: [],
-            categories: [],
-            tags: [],
-            images: [],
-            priceTaxExcl: [],
-            priceTaxIncl: [],
-            taxRate: [],
-            comparedPrice: [],
-            quantity: [],
-            sku: [],
-            width: [],
-            height: [],
-            depth: [],
-            weight: [],
-            extraShippingFee: [],
-            active: []
-        });
+    onTabClick(event: MatTabChangeEvent): void {
+        this.selectedTab = event.index;
     }
 
+    onEditProduct(): void {
+        this.isEditedProduct = true;
+    }
+
+    onSaveEditProduct(): void {
+        this.isEditedProduct = false;
+    }
+    onCancelEditProduct(): void {
+        this.isEditedProduct = false;
+    }
+    onDelectProduct(): void {
+        console.log('Delete Product');
+    }
+
+    onChangePrice(): void {
+        this.isChangingPrice = true;
+        this.detailProductForm.get('price').enable();
+    }
+    onSaveChangePrice(): void {
+        this.isChangingPrice = false;
+        this.detailProductForm.get('price').disable();
+    }
+    onCancelChangePrice(): void {
+        this.isChangingPrice = false;
+        this.detailProductForm.get('price').disable();
+    }
+
+    createProductForm(): FormGroup {
+        return this._formBuilder.group({
+            name: [],
+            code: [],
+            detail: [],
+            price: []
+        });
+    }
 }

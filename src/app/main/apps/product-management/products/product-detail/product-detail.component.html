@@ -1,184 +1,455 @@
 <div id="product" class="page-layout carded fullwidth inner-scroll">
-
     <!-- TOP BACKGROUND -->
     <div class="top-bg accent"></div>
     <!-- / TOP BACKGROUND -->
 
     <!-- CENTER -->
     <div class="center">
-
         <!-- HEADER -->
-        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
-
+        <div
+            class="header accent"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+        >
             <!-- APP TITLE -->
             <div fxLayout="row" fxLayoutAlign="start center">
-
-                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/product-management/products'">
+                <button
+                    mat-icon-button
+                    class="mr-0 mr-sm-16"
+                    [routerLink]="'/apps/product-management/products'"
+                >
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <!-- <div class="product-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                    <img *ngIf="product.images[0]" [src]="product.images[0].url">
-                    <img *ngIf="!product.images[0]" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
-                </div> -->
+                <!--
+                    <div class="product-image mr-8 mr-sm-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                        <img *ngIf="product.images[0]" [src]="product.images[0].url">
+                        <img *ngIf="!product.images[0]" [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                    </div>
+                -->
 
-                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    <div class="h2" *ngIf="pageType ==='edit'">
+                <div
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '-25px' }
+                    }"
+                >
+                    <div class="h2">
                         <!-- {{product.name}} -->
                         Product Name
                     </div>
-                    <div class="h2" *ngIf="pageType ==='new'">
-                        New Product
-                    </div>
+                    <div class="h2" *ngIf="pageType === 'new'">New Product</div>
                     <div class="subtitle secondary-text">
                         <span>Product Code</span>
                     </div>
                 </div>
             </div>
             <!-- / APP TITLE -->
+            <!-- Button Setting Product -->
+            <div>
+                <button
+                    mat-raised-button
+                    [matMenuTriggerFor]="menuEdit"
+                    type="button"
+                    class="save-product-button"
+                    [@animate]="{
+                        value: '*',
+                        params: { delay: '100ms', x: '25px' }
+                    }"
+                    *ngIf="selectedTab === 0 && !isEditedProduct"
+                >
+                    <mat-icon>settings</mat-icon> &nbsp; <span>Settings</span>
+                </button>
 
-            <button mat-raised-button class="save-product-button"[@animate]="{value:'*',params:{delay:'100ms',x:'25px'}}">
-                <mat-icon>edit</mat-icon> &nbsp;
-                <span>EDIT</span>
-            </button>
+                <mat-menu #menuEdit="matMenu">
+                    <button mat-menu-item (click)="onEditProduct()">
+                        <mat-icon>edit</mat-icon>&nbsp; Edit
+                    </button>
+                    <button
+                        mat-menu-item
+                        [disabled]="productStatus === 'Inactive' ? false : true"
+                        (click)="onDelectProduct()"
+                    >
+                        <mat-icon>delete</mat-icon>&nbsp; Delete
+                    </button>
+                </mat-menu>
+            </div>
+            <!-- End Button Setting Product -->
         </div>
         <!-- / HEADER -->
 
         <!-- CONTENT CARD -->
         <div class="content-card">
-
             <!-- CONTENT -->
             <div class="content">
-
-                <form name="productForm" class="product w-100-p" fxLayout="column" fxFlex>
-
-                    <mat-tab-group>
-
+                <form
+                    name="productForm"
+                    class="product w-100-p"
+                    fxLayout="column"
+                    fxFlex
+                >
+                    <mat-tab-group (selectedTabChange)="onTabClick($event)">
+                        <!-- Basic Tab -->
                         <mat-tab label="Basic Info">
+                            <form
+                                [formGroup]="detailProductForm"
+                                class="tab-content p-24"
+                                fusePerfectScrollbar
+                                fxLayout="column"
+                                fxLayoutAlign="start"
+                            >
+                                <div
+                                    fxLayout="row"
+                                    fxLayoutAlign="end start"
+                                    class="mat-title"
+                                >
+                                <span class="h3"> Product is inactive.</span>
+                                    <button
+                                        mat-stroked-button
+                                        [matMenuTriggerFor]="menu"
+                                        type="button"
+                                        [color]="
+                                            productStatus === 'Inactive'
+                                                ? 'warn'
+                                                : 'accent'
+                                        "
+                                    >
+                                        {{ productStatus }}
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button
+                                            *ngIf="isEditedProduct"
+                                            mat-menu-item
+                                            (click)="productStatus = 'Active'"
+                                        >
+                                            <mat-icon>{{
+                                                productStatus === 'Active'
+                                                    ? 'check'
+                                                    : ''
+                                            }}</mat-icon>
+                                            Active
+                                        </button>
+                                        <button
+                                            *ngIf="isEditedProduct"
+                                            mat-menu-item
+                                            (click)="productStatus = 'Inactive'"
+                                        >
+                                            <mat-icon>{{
+                                                productStatus === 'Inactive'
+                                                    ? 'check'
+                                                    : ''
+                                            }}</mat-icon>
+                                            Inactive
+                                        </button>
+                                    </mat-menu>
+                                </div>
 
-                            <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column" fxLayoutAlign="start">
-
-                                <!-- <div class="h2 mb-24">Reactive Form Example</div> -->
-                                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-                                    <mat-form-field appearance="outline" class="w-100-p mr-8">
+                                <div
+                                    fxLayout="row"
+                                    fxLayout.xs="column"
+                                    fxLayoutAlign="space-between start"
+                                >
+                                    <mat-form-field
+                                        appearance="outline"
+                                        class="w-100-p mr-8"
+                                    >
                                         <mat-label>Product Name</mat-label>
-                                        <input matInput placeholder="Please enter the information ">
+                                        <input
+                                            matInput
+                                            placeholder="Please enter the information "
+                                            formControlName="name"
+                                        />
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" class="w-100-p">
+                                    <mat-form-field
+                                        appearance="outline"
+                                        class="w-100-p"
+                                    >
                                         <mat-label>Product Code</mat-label>
-                                        <input matInput placeholder="Please enter the information ">
+                                        <input
+                                            matInput
+                                            placeholder="Please enter the information "
+                                            formControlName="code"
+                                        />
                                     </mat-form-field>
                                 </div>
-                                <!-- 
-                                <mat-form-field appearance="outline" class="w-100-p">
-                                    <mat-label>Product Description</mat-label>
-                                    <textarea matInput placeholder="Product Description" rows="3"></textarea>
-                                </mat-form-field> -->
 
-                                <div fxLayout="row" fxLayoutAlign="space-between start">
-                                    <mat-form-field appearance="outline" class="w-100-p">
+                                <mat-form-field
+                                    appearance="outline"
+                                    class="w-100-p"
+                                >
+                                    <mat-label>Product Description</mat-label>
+                                    <textarea
+                                        matInput
+                                        placeholder="Product Description"
+                                        rows="3"
+                                        formControlName="detail"
+                                    ></textarea>
+                                </mat-form-field>
+
+                                <div
+                                    fxLayout="row"
+                                    fxLayoutAlign="space-between center"
+                                    fxLayoutGap="10px"
+                                >
+                                    <mat-form-field
+                                        appearance="outline"
+                                        fxFlex
+                                        class="mt-10"
+                                    >
                                         <mat-label>Price</mat-label>
-                                        <input matInput placeholder="Please enter the information " disabled>
+                                        <input
+                                            matInput
+                                            placeholder="Please enter the information "
+                                            formControlName="price"
+                                        />
                                     </mat-form-field>
+                                    <div
+                                        fxLayout="row"
+                                        fxLayoutGap="10px"
+                                        *ngIf="!isEditedProduct"
+                                    >
+                                        <div
+                                            *ngIf="isChangingPrice"
+                                            [@animate]="{
+                                                value: '*',
+                                                params: {
+                                                    delay: '100ms',
+                                                    x: '25px'
+                                                }
+                                            }"
+                                        >
+                                            <button
+                                                mat-icon-button
+                                                color="primary"
+                                                (click)="onSaveChangePrice()"
+                                            >
+                                                <mat-icon>done</mat-icon>
+                                            </button>
+                                            <button
+                                                mat-icon-button
+                                                color="warn"
+                                                (click)="onCancelChangePrice()"
+                                            >
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            mat-flat-button
+                                            color="accent"
+                                            *ngIf="isChangingPrice === false"
+                                            [disabled]="
+                                                productStatus === 'Inactive'
+                                                    ? true
+                                                    : false
+                                            "
+                                            (click)="onChangePrice()"
+                                            [@animate]="{
+                                                value: '*',
+                                                params: {
+                                                    delay: '100ms',
+                                                    x: '25px'
+                                                }
+                                            }"
+                                        >
+                                            Change
+                                        </button>
+                                    </div>
                                 </div>
                                 <!-- Button Edit -->
-                                <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px">
-                                    <button mat-flat-button color="primary">Primary</button>
-                                    <button mat-flat-button color="accent">Accent</button>
+                                <div
+                                    fxLayout="row"
+                                    fxLayoutAlign="center start"
+                                    fxLayoutGap="10px"
+                                    [@animate]="{
+                                        value: '*',
+                                        params: {
+                                            delay: '100ms',
+                                            y: '25px'
+                                        }
+                                    }"
+                                    *ngIf="isEditedProduct"
+                                >
+                                    <button
+                                        mat-flat-button
+                                        color=""
+                                        (click)="onCancelEditProduct()"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        mat-flat-button
+                                        color="primary"
+                                        (click)="onSaveEditProduct()"
+                                    >
+                                        Save
+                                    </button>
                                 </div>
-
-                            </div>
-
+                            </form>
                         </mat-tab>
+                        <!-- End Basic Tab -->
 
-                        <!-- Price History -->
-                        <mat-tab label="Price History" *ngIf="pageType ==='edit'">
-
+                        <!-- Price History Tab -->
+                        <mat-tab
+                            label="Price History"
+                            [disabled]="isEditedProduct"
+                        >
                             <div class="tab-content p-24" fusePerfectScrollbar>
-
                                 <div class="section pb-48">
-                                    <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                                        <div class="datepickers" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-                                            <mat-form-field color="accent" fxFlex="100" >
+                                    <div
+                                        class=""
+                                        fxLayout="row"
+                                        fxLayout.xs="column"
+                                        fxLayoutAlign="space-between center"
+                                        fxLayoutGap="10px"
+                                    >
+                                        <div
+                                            class="datepickers"
+                                            fxLayout="row"
+                                            fxLayout.xs="column"
+                                            fxLayoutGap="10px"
+                                        >
+                                            <mat-form-field
+                                                color="accent"
+                                                fxFlex="100"
+                                            >
                                                 <mat-label>From Date</mat-label>
-                                                <input matInput [matDatepicker]="picker1">
-                                                <mat-datepicker-toggle matPrefix [for]="picker1"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker1></mat-datepicker>
+                                                <input
+                                                    matInput
+                                                    [matDatepicker]="picker1"
+                                                />
+                                                <mat-datepicker-toggle
+                                                    matPrefix
+                                                    [for]="picker1"
+                                                ></mat-datepicker-toggle>
+                                                <mat-datepicker
+                                                    #picker1
+                                                ></mat-datepicker>
                                             </mat-form-field>
 
-                                            <mat-form-field color="accent" fxFlex="100">
+                                            <mat-form-field
+                                                color="accent"
+                                                fxFlex="100"
+                                            >
                                                 <mat-label>To Date</mat-label>
-                                                <input matInput [matDatepicker]="picker2">
-                                                <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                                                <input
+                                                    matInput
+                                                    [matDatepicker]="picker2"
+                                                />
+                                                <mat-datepicker-toggle
+                                                    matPrefix
+                                                    [for]="picker2"
+                                                ></mat-datepicker-toggle>
+                                                <mat-datepicker
+                                                    #picker2
+                                                    color="primary"
+                                                ></mat-datepicker>
                                             </mat-form-field>
                                         </div>
 
-                                        <mat-form-field appearance="" class="m-0">
-                                            <input matInput placeholder="Search">
+                                        <mat-form-field
+                                            appearance=""
+                                            class="m-0"
+                                        >
+                                            <input
+                                                matInput
+                                                placeholder="Search"
+                                            />
                                             <span matSuffix>
-                                                <mat-icon>search</mat-icon> &nbsp;
+                                                <mat-icon>search</mat-icon>
+                                                &nbsp;
                                             </span>
                                         </mat-form-field>
                                     </div>
 
-                                    <mat-table class="products-table" #table [dataSource]="dataSource" matSort
-                                        [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
-
+                                    <mat-table
+                                        class="products-table"
+                                        #table
+                                        [dataSource]="dataSource"
+                                        matSort
+                                        [@animateStagger]="{ value: '50' }"
+                                        fusePerfectScrollbar
+                                    >
                                         <!-- Code Column -->
-                                        <ng-container matColumnDef="productCode">
-                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+                                        <ng-container
+                                            matColumnDef="productCode"
+                                        >
+                                            <mat-header-cell
+                                                *matHeaderCellDef
+                                                mat-sort-header
+                                                >Code</mat-header-cell
+                                            >
                                             <mat-cell *matCellDef="let product">
-                                                <p class="text-truncate">{{product.productCode}}</p>
+                                                <p class="text-truncate">
+                                                    {{ product.productCode }}
+                                                </p>
                                             </mat-cell>
                                         </ng-container>
 
                                         <!-- Category Column -->
-                                        <ng-container matColumnDef="productName">
-                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+                                        <ng-container
+                                            matColumnDef="productName"
+                                        >
+                                            <mat-header-cell
+                                                *matHeaderCellDef
+                                                mat-sort-header
+                                                >Category</mat-header-cell
+                                            >
                                             <mat-cell *matCellDef="let product">
-                                                <p class="text-truncate">{{product.productName}}</p>
+                                                <p class="text-truncate">
+                                                    {{ product.productName }}
+                                                </p>
                                             </mat-cell>
                                         </ng-container>
 
                                         <!-- Price Column -->
                                         <ng-container matColumnDef="price">
-                                            <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                                            <mat-header-cell
+                                                *matHeaderCellDef
+                                                mat-sort-header
+                                                >Price</mat-header-cell
+                                            >
                                             <mat-cell *matCellDef="let product">
                                                 <p class="price text-truncate">
-                                                    {{product.price | currency:'USD':'symbol'}}
+                                                    {{
+                                                        product.price
+                                                            | currency
+                                                                : 'USD'
+                                                                : 'symbol'
+                                                    }}
                                                 </p>
                                             </mat-cell>
                                         </ng-container>
 
-                                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+                                        <mat-header-row
+                                            *matHeaderRowDef="
+                                                displayedColumns;
+                                                sticky: true
+                                            "
+                                        ></mat-header-row>
 
-                                        <mat-row *matRowDef="let product; columns: displayedColumns;" class="product"
-                                            matRipple>
+                                        <mat-row
+                                            *matRowDef="
+                                                let product;
+                                                columns: displayedColumns
+                                            "
+                                            class="product"
+                                            matRipple
+                                        >
                                         </mat-row>
-
                                     </mat-table>
-
                                 </div>
-
-
-
                             </div>
-
                         </mat-tab>
-                        <!-- End Price History -->
-
+                        <!-- End Price History Tab -->
                     </mat-tab-group>
-
                 </form>
-
             </div>
             <!-- / CONTENT -->
-
         </div>
         <!-- / CONTENT CARD -->
-
     </div>
     <!-- / CENTER -->
-
 </div>

@@ -18,6 +18,12 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { AppRoutingModule } from 'app/app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './state/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './state/effects/app.effects';
 
 
 @NgModule({
@@ -48,7 +54,10 @@ import { AppRoutingModule } from 'app/app-routing.module';
 
         // App modules
         LayoutModule,
-        SampleModule
+        SampleModule,
+        StoreModule.forRoot(reducers, { metaReducers }),
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([AppEffects])
     ],
     bootstrap   : [
         AppComponent
