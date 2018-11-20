@@ -4,14 +4,16 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ProductService {
-  demo = new BehaviorSubject(demo_products);
+    demo = new BehaviorSubject(demo_products);
 
-  constructor() {
-    console.log('Start Service!!');
-    this.demo.subscribe(d => console.log(d.length));
-  }
+    constructor() {
+        console.log('Start Service!!');
+    }
 
-  getAllProduct(): Observable<Product[]> {
-    return this.demo;
-  }
+    getAllProduct(): Observable<Product[]> {
+        return this.demo;
+    }
+    selectProductById(id: string): Observable<Product> {
+        return;
+    }
 }

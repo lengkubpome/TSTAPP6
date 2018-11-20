@@ -35,8 +35,11 @@ export function productReducer(
             return state;
         }
         case fromActions.ProductActionTypes.SELECT_PRODUCT: {
-            return Object.assign({ ...state, selectedProductId: action.payload.productId });
-          }     
+            return Object.assign({
+                ...state,
+                selectedProductId: action.payload.productId
+            });
+        }
         default: {
             return state;
         }

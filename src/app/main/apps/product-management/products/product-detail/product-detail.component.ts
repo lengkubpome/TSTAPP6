@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Product, demo_products } from '../model/product.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { FuseUtils } from '@fuse/utils';
@@ -23,6 +23,7 @@ import {
 import { Store, select } from '@ngrx/store';
 
 import { State } from '../../product-management.state';
+import * as fromActions from '../state/product.actions';
 import * as fromProduct from '../state';
 
 @Component({
@@ -58,10 +59,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     filter: ElementRef;
 
     // Private
-    private _unsubscribeAll: Subject<any>;
+    private unsubscribe$: Subject<void>;
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private store: Store<State>,
         private _formBuilder: FormBuilder,
         private _matSnackBar: MatSnackBar
@@ -70,17 +72,28 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         // this.product = new Product();
 
         // Set the private defaults
-        this._unsubscribeAll = new Subject();
+        this.unsubscribe$ = new Subject();
     }
 
     ngOnInit(): void {
-        this.store
-            .pipe(select(fromProduct.selectCurrentProduct))
-            .subscribe(p => {
-                if (p === undefined) {
-                    this.router.navigate(['/apps/product-management/products']);
-                }
-            });
+        // this.route.params
+        //     .pipe(takeUntil(this.unsubscribe$))
+        //     .subscribe(param => {
+        //         this.store.dispatch(
+        //             new fromActions.SelectProduct({ productId: param.id })
+        //         );
+        //     });
+
+        // this.store
+        //     .pipe(
+        //         select(fromProduct.selectCurrentProduct),
+        //         takeUntil(this.unsubscribe$)
+        //     )
+        //     .subscribe(p => {
+        //         if (p === undefined) {
+        //             this.router.navigate(['/apps/product-management/products']);
+        //         }
+        //     });
 
         this.detailProductForm = this.createProductForm();
         this.productStatus = 'Active';
@@ -89,8 +102,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
+        this. $.next();
+        this.unsubscribe$.complete();
     }
 
     onTabClick(event: MatTabChangeEvent): void {

@@ -66,6 +66,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     selectProduct(productId: string): void {
         this.store.dispatch(new fromActions.SelectProduct({ productId }));
 
-        this.router.navigate(['/apps/product-management/products/', productId]);
+        // this.router.navigate(['/apps/product-management/products/', productId]);
     }
 }
