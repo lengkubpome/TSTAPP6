@@ -1,9 +1,12 @@
+import { ProductHistory } from './product-history.model';
+
 export interface Product {
     id: string | null;
     name: string;
     code: string;
     price: number;
     active: boolean;
+    history?: ProductHistory[];
 }
 
 export interface ProductHistory {

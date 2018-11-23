@@ -1,19 +1,20 @@
-import { ProductHistory } from './../model/product.model';
-import { Product } from '../model/product.model';
+import { ProductHistory } from '../../model/product-history.model';
+import { Product } from '../../model/product.model';
 /* NgRx */
 import { Action } from '@ngrx/store';
 
 export enum ProductActionTypes {
-    SELECT_PRODUCT = '[Product] Product Selected',
-    LOAD_HISTORY_PRODUCT = '[Product] Load History Product',
-
-    SET_CURRENT_PRODUCT = '[Product] Set Current Product',
-    CLEAR_CURRENT_PRODUCT = '[Product] Clear Current Product',
-    // INITIALIZE_PRODUCT = '[Product] Initialize Product',
-
+   
     LOAD_PRODUCT = '[Product] Load',
     LOAD_PRODUCT_SUCCESS = '[Product] Load Success',
     LOAD_PRODUCT_FAIL = '[Product] Load Fail',
+
+    SELECT_PRODUCT = '[Product] Product Selected',
+    SET_SELECTED_PRODUCT = '[Product] Set Selected Product',
+    CLEAR_SELECTED_PRODUCT = '[Product] Clear Selected Product',
+    // INITIALIZE_PRODUCT = '[Product] Initialize Product',
+
+    LOAD_HISTORY_PRODUCT = '[Product] Load History Product',
 
     UPDATE_PRODUCT = '[Product] Update Product',
     //   UPDATE_PRODUCT_SUCCESS = '[Product] Update Product Success',
@@ -32,7 +33,6 @@ export enum ProductActionTypes {
 
 export class LoadProduct implements Action {
     readonly type = ProductActionTypes.LOAD_PRODUCT;
-    // constructor(public payload: { product: Product[] }) {}
 }
 
 export class LoadProductSuccess implements Action {
@@ -40,16 +40,18 @@ export class LoadProductSuccess implements Action {
     constructor(public payload: { products: Product[] }) {}
 }
 
-// export class GetError implements Action {
-//     readonly type = ProductActionTypes.GET_ERROR;
-//     constructor(public payload: any) {}
-// }
+export class LoadProductFail implements Action {
+    readonly type = ProductActionTypes.LOAD_PRODUCT_FAIL;
+    constructor(public payload: { errorMessage: string }) {}
+}
+
 
 export class SelectProduct implements Action {
     readonly type = ProductActionTypes.SELECT_PRODUCT;
     constructor(public payload: { productId: string }) {}
 }
 
+// will delete
 export class LoadHistoryProduct implements Action {
     readonly type = ProductActionTypes.LOAD_HISTORY_PRODUCT;
     constructor(public payload: { history: ProductHistory[] }) {}
@@ -58,6 +60,5 @@ export class LoadHistoryProduct implements Action {
 export type PRODUCT_ACTIONS =
     | LoadProduct
     | LoadProductSuccess
-    // | GetError
     | SelectProduct
     | LoadHistoryProduct;

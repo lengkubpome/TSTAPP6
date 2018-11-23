@@ -1,12 +1,12 @@
-import { ProductHistory } from './../model/product.model';
+import { ProductHistory } from '../../model/product.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import * as fromActions from './product.actions';
-import * as fromReducer from '../../product-management.state';
-import * as fromProduct from './index';
+import * as fromActions from '../actions/product.action';
+import * as fromProductManagement from '../../../product-management.state';
+import * as fromProduct from '../reducers/index';
 import {
     switchMap,
     map,
@@ -15,18 +15,18 @@ import {
     catchError,
     withLatestFrom
 } from 'rxjs/operators';
-import { ProductService } from '../service/product.service';
+import { ProductService } from '../../service/product.service';
 import { Router } from '@angular/router';
-import { Product } from '../model/product.model';
+import { Product } from '../../model/product.model';
 
 const BUSINESS_ID = '0406069000354';
 
 @Injectable()
-export class ProductEffects {
+export class ProductEffect {
     constructor(
         private afs: AngularFirestore,
         private actions$: Actions,
-        private store: Store<fromReducer.State>,
+        private store: Store<fromProductManagement.State>,
         private productService: ProductService,
         private router: Router
     ) {}
@@ -49,7 +49,7 @@ export class ProductEffects {
         ofType(fromActions.ProductActionTypes.SELECT_PRODUCT),
         map((action: fromActions.SelectProduct) => action.payload),
         withLatestFrom(
-            this.store.pipe(select(fromReducer.selectProductManagementState))
+            this.store.pipe(select(fromProductManagement.getProductManagementState))
         ),
         map(([payload, storeState]) => {
             const productIds = storeState.products.ids as string[];
