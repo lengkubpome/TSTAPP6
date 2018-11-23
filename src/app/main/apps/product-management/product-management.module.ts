@@ -6,7 +6,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { reducers, FEATURE_NAME } from './product-management.state';
-import { ProductEffects } from './products/state/product.effects';
+import { ProductEffects } from './products/store/product.effects';
 
 import { InventoryComponent } from './inventory/inventory.component';
 import { ProductListComponent } from './products/product-list/product-list.component';

@@ -1,3 +1,4 @@
+import { ProductService } from './../service/product.service';
 import { Store, select } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
@@ -14,8 +15,8 @@ import { Product, demo_products } from '../model/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { State } from '../../product-management.state';
-import * as fromActions from '../state/product.actions';
-import * as fromProduct from '../state';
+import * as fromActions from '../store/product.actions';
+import * as fromProduct from '../store';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -26,12 +27,7 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-    displayedColumns: string[] = [
-        'productCode',
-        'productName',
-        'price',
-        'active'
-    ];
+    displayedColumns: string[] = ['code', 'name', 'price', 'active'];
     // dataSource = new MatTableDataSource<Product>();
 
     productList$: Observable<Product[]>;
@@ -48,7 +44,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // Private
     // private unsubscribe$: Subject<void> = new Subject<void>();
 
-    constructor(private router: Router, private store: Store<State>) {}
+    constructor(
+        private router: Router,
+        private store: Store<State>,
+        private productService: ProductService
+    ) {}
 
     ngOnInit(): void {
         this.productList$ = this.store.pipe(
@@ -61,11 +61,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
         // this.unsubscribe$.complete();
     }
 
-    newProduct(): void {}
+    newProduct(): void {
+        this.productService
+            .checkProductById('MOrdrql9YPr25Nyzxdsv')
+            .subscribe(res => console.log(res));
+    }
 
     selectProduct(productId: string): void {
-        this.store.dispatch(new fromActions.SelectProduct({ productId }));
+        // this.store.dispatch(new fromActions.SelectProduct({ productId }));
 
-        // this.router.navigate(['/apps/product-management/products/', productId]);
+        this.router.navigate(['/apps/product-management/products/', productId]);
     }
 }

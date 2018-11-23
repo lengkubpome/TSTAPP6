@@ -195,21 +195,21 @@
                                     <mat-table class="products-table" #table [dataSource]="dataSource" matSort
                                         [@animateStagger]="{ value: '50' }" fusePerfectScrollbar>
                                         <!-- Code Column -->
-                                        <ng-container matColumnDef="productCode">
+                                        <ng-container matColumnDef="code">
                                             <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
                                             <mat-cell *matCellDef="let product">
                                                 <p class="text-truncate">
-                                                    {{ product.productCode }}
+                                                    {{ product.code }}
                                                 </p>
                                             </mat-cell>
                                         </ng-container>
 
                                         <!-- Category Column -->
-                                        <ng-container matColumnDef="productName">
+                                        <ng-container matColumnDef="name">
                                             <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
                                             <mat-cell *matCellDef="let product">
                                                 <p class="text-truncate">
-                                                    {{ product.productName }}
+                                                    {{ product.name }}
                                                 </p>
                                             </mat-cell>
                                         </ng-container>

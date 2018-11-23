@@ -23,8 +23,8 @@ import {
 import { Store, select } from '@ngrx/store';
 
 import { State } from '../../product-management.state';
-import * as fromActions from '../state/product.actions';
-import * as fromProduct from '../state';
+import * as fromActions from '../store/product.actions';
+import * as fromProduct from '../store';
 
 @Component({
     selector: 'app-product-detail',
@@ -36,7 +36,7 @@ import * as fromProduct from '../state';
 export class ProductDetailComponent implements OnInit, OnDestroy {
     detailProductForm: FormGroup;
 
-    displayedColumns: string[] = ['productCode', 'productName', 'price'];
+    displayedColumns: string[] = ['code', 'name', 'price'];
     dataSource = new MatTableDataSource<Product>();
 
     product: Product;
@@ -76,22 +76,24 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.route.params
-        //     .pipe(takeUntil(this.unsubscribe$))
-        //     .subscribe(param => {
-        //         this.store.dispatch(
-        //             new fromActions.SelectProduct({ productId: param.id })
-        //         );
-        //     });
+        this.route.params
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(param => {
+                this.store.dispatch(
+                    new fromActions.SelectProduct({ productId: param.id })
+                );
+            });
 
         // this.store
         //     .pipe(
-        //         select(fromProduct.selectCurrentProduct),
+        //         select(fromProduct.selectProductIds),
         //         takeUntil(this.unsubscribe$)
         //     )
         //     .subscribe(p => {
         //         if (p === undefined) {
         //             this.router.navigate(['/apps/product-management/products']);
+        //         } else {
+        //             console.log(p);
         //         }
         //     });
 
@@ -102,7 +104,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
-        this. $.next();
+        this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
 

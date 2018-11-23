@@ -1,6 +1,6 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
-import { productReducer, ProductState } from './products/state/product.reducer';
+import { productReducer, ProductState } from './products/store/product.reducer';
 import { AppState } from '@app/core';
 
 export const FEATURE_NAME = 'productManagement';

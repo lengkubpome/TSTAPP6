@@ -5,6 +5,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '@env/environment';
 
 import { LocalStorageService } from './local-storage/local-storage.service';
@@ -25,6 +27,10 @@ import { CustomSerializer } from './router/custom-serializer';
         CommonModule,
         HttpClientModule,
 
+        // firestore
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule.enablePersistence(),
+
         // ngrx
         StoreModule.forRoot(reducers, { metaReducers }),
         StoreRouterConnectingModule.forRoot(),
@@ -34,7 +40,6 @@ import { CustomSerializer } from './router/custom-serializer';
             : StoreDevtoolsModule.instrument({
                   name: 'Angular NgRx Material Starter'
               }),
-
 
         !environment.production ? StoreDevtoolsModule.instrument() : []
     ],

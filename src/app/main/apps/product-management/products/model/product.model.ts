@@ -1,37 +1,42 @@
 export interface Product {
     id: string | null;
-    productName: string;
-    productCode: string;
+    name: string;
+    code: string;
     price: number;
     active: boolean;
+}
+
+export interface ProductHistory {
+    id: string;
+    detail: string;
 }
 
 export const demo_products: Product[] = [
     {
         id: '1',
-        productCode: '01',
-        productName: 'เหล็กหนา',
+        code: '01',
+        name: 'เหล็กหนา',
         price: 10.2,
         active: false
     },
     {
         id: '2',
-        productCode: '02',
-        productName: 'เหล็กบาง',
+        code: '02',
+        name: 'เหล็กบาง',
         price: 10.0,
         active: true
     },
     {
         id: '3',
-        productCode: '03',
-        productName: 'กระดาษกล่อง',
+        code: '03',
+        name: 'กระดาษกล่อง',
         price: 5.4,
         active: false
     },
     {
         id: '4',
-        productCode: '04',
-        productName: 'กระดาษสี',
+        code: '04',
+        name: 'กระดาษสี',
         price: 4.3,
         active: true
     }

@@ -25,6 +25,7 @@ export const selectAllProducts = createSelector(
     selectProduct,
     fromProduct.selectAllProducts
 );
+
 export const selectProductsTotal = createSelector(
     selectProduct,
     fromProduct.selectProductTotal
@@ -32,11 +33,19 @@ export const selectProductsTotal = createSelector(
 
 export const selectCurrentProductId = createSelector(
     selectProduct,
-    fromProduct.getSelectedProductId
+    fromProduct.selectProductSelectedId
 );
 
 export const selectCurrentProduct = createSelector(
     selectProductEntities,
     selectCurrentProductId,
-    (productEntities, productId) => productEntities[productId]
+    (productEntities, productId) => {
+        return productEntities[productId];
+    }
 );
+
+// export const selectCurrentProductWhenLoad = store => {
+//     console.log(store);
+
+//     return store.select(selectProductEntities);
+// };
