@@ -1,7 +1,7 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
-import { productReducer, ProductState } from './products/store/product.reducer';
 import { AppState } from '@app/core';
+import * as fromProduct from './products/store/reducers/product.reducer';
 
 export const FEATURE_NAME = 'productManagement';
 
@@ -9,15 +9,15 @@ export interface State extends AppState {
     productManagement: ProductManagementState;
 }
 
-export interface ProductManagementState {
-    products: ProductState;
+export interface ProductManagementState  {
+    products: fromProduct.ProductState;
 }
 
 export const reducers: ActionReducerMap<ProductManagementState> = {
-    products: productReducer
+    products: fromProduct.productReducer
 };
 
-export const selectProductManagementState = createFeatureSelector<
+export const getProductManagementState = createFeatureSelector<
     State,
     ProductManagementState
 >(FEATURE_NAME);

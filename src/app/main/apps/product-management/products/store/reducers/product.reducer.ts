@@ -1,34 +1,24 @@
-import { ProductHistory } from './../model/product.model';
+import { ProductHistory } from '../../model/product.model';
 // import { selectProductEntities } from './product.selectors';
-import { Product } from '../model/product.model';
+import { Product } from '../../model/product.model';
 
-import * as fromActions from './product.actions';
-// import { productAdapter } from './product.adapter';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { createFeatureSelector } from '@ngrx/store';
+import * as fromActions from '../actions';
+import { productAdapter } from '../adapters';
+import { EntityState} from '@ngrx/entity';
 
-// export const FEATURE_NAME = 'products';
-
-// adaoter
-export const productAdapter: EntityAdapter<Product> = createEntityAdapter<
-    Product
->({
-    //  sortComparer: sortByCategory
-    sortComparer: false
-});
 
 export interface ProductState extends EntityState<Product> {
     // selectedProduct: { productId: string; history: ProductHistory[] };
     selectedProductId: string;
     selectProductHistory: ProductHistory[];
-    load: boolean;
+    loaded: boolean;
     loading: boolean;
 }
 
 export const initialState: ProductState = productAdapter.getInitialState({
     selectedProductId: null,
     selectProductHistory: null,
-    load: false,
+    loaded: false,
     loading: false
 });
 
@@ -61,9 +51,11 @@ export function productReducer(
         }
     }
 }
-// export const selectProductState = createFeatureSelector<ProductState>('products');
 
-export const selectProductSelectedId = (state: ProductState) => state.selectedProductId;
+export const getProductLoading = (state: ProductState) => state.loading;
+export const getProductLoaded = (state: ProductState) => state.loaded;
+export const getSelectedProductId = (state: ProductState) =>
+    state.selectedProductId;
 
 // get the selectors
 

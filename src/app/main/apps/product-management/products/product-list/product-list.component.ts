@@ -15,8 +15,7 @@ import { Product, demo_products } from '../model/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { State } from '../../product-management.state';
-import * as fromActions from '../store/product.actions';
-import * as fromProduct from '../store';
+import * as fromProductStore from '../store';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -52,9 +51,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.productList$ = this.store.pipe(
-            select(fromProduct.selectAllProducts)
+            select(fromProductStore.selectAllProducts)
         );
-        this.store.dispatch(new fromActions.LoadProduct());
+        this.store.dispatch(new fromProductStore.LoadProduct());
     }
     ngOnDestroy(): void {
         // this.unsubscribe$.next();
@@ -68,7 +67,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     selectProduct(productId: string): void {
-        // this.store.dispatch(new fromActions.SelectProduct({ productId }));
+        // this.store.dispatch(new fromProductStore.SelectProduct({ productId }));
 
         this.router.navigate(['/apps/product-management/products/', productId]);
     }

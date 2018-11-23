@@ -1,3 +1,4 @@
+
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,13 +7,13 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { reducers, FEATURE_NAME } from './product-management.state';
-import { ProductEffects } from './products/store/product.effects';
+import { ProductEffect } from './products/store';
 
 import { InventoryComponent } from './inventory/inventory.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { FuseWidgetModule } from '@fuse/components';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { ProductService } from './products/service/product.service';
+import { allProductService } from './products/service';
 
 const routes: Routes = [
     {
@@ -45,13 +46,13 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
         StoreModule.forFeature(FEATURE_NAME, reducers),
-        EffectsModule.forFeature([ProductEffects])
+        EffectsModule.forFeature([ProductEffect])
     ],
     declarations: [
         InventoryComponent,
         ProductListComponent,
         ProductDetailComponent
     ],
-    providers: [ProductService]
+    providers: [allProductService]
 })
 export class ProductManagementModule {}

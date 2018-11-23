@@ -23,8 +23,7 @@ import {
 import { Store, select } from '@ngrx/store';
 
 import { State } from '../../product-management.state';
-import * as fromActions from '../store/product.actions';
-import * as fromProduct from '../store';
+import * as fromProductStore from '../store';
 
 @Component({
     selector: 'app-product-detail',
@@ -80,7 +79,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe(param => {
                 this.store.dispatch(
-                    new fromActions.SelectProduct({ productId: param.id })
+                    new fromProductStore.SelectProduct({ productId: param.id })
                 );
             });
 
