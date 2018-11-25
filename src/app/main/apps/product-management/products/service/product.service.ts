@@ -1,22 +1,27 @@
-import { Product, demo_products } from './../model/product.model';
+import { Product } from './../model/product.model';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, catchError } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
-const BUSINESS_ID = '0406069000354';
+import * as fromProductManagement from '../../product-management.state';
+import { ProductHistory } from '../model/product-history.model';
 
 @Injectable()
 export class ProductService {
-    demo = new BehaviorSubject(demo_products);
+    private BUSINESS_ID: string;
 
-    constructor(private afs: AngularFirestore) {
-        console.log('Start Service!!');
+    constructor(
+        private afs: AngularFirestore,
+        private store: Store<fromProductManagement.State>
+    ) {
+        this.BUSINESS_ID = '0406069000354';
     }
 
     getProducts(): Observable<Product[]> {
         return this.afs
-            .collection(`business/${BUSINESS_ID}/products`)
+            .collection(`business/${this.BUSINESS_ID}/products`)
             .snapshotChanges()
             .pipe(
                 map(products => {
@@ -31,9 +36,30 @@ export class ProductService {
                 catchError((error: any) => Observable.throw(error.json()))
             );
     }
-    checkProductById(id: string): Observable<boolean> {
+
+    getProductHistory(id: string): Observable<any> {
+
         return this.afs
-            .doc(`business/${BUSINESS_ID}/products/${id}`)
+            .collection(`business/${this.BUSINESS_ID}/products/${id}/history`)
+            .snapshotChanges()
+            .pipe(
+                map(histories => {
+                    return histories.map(doc => {
+                        const data = doc.payload.doc.data();
+                        console.log(data);
+                        
+                        return { id: doc.payload.doc.id, ...data };
+                    });
+                })
+            );
+    }
+
+    checkProductById(id: string): Observable<boolean> {
+        console.log('xxxxxx');
+        console.log(id);
+        
+        return this.afs
+            .doc(`business/${this.BUSINESS_ID}/products/${id}`)
             .snapshotChanges()
             .pipe(
                 map(product => {
