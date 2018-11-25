@@ -142,14 +142,13 @@
                                                     ? true
                                                     : false
                                             "
-                                            (click)="onChangePrice()" >
+                                            (click)="onChangePrice()">
                                             Change
                                         </button>
                                     </div>
                                 </div>
                                 <!-- Button Edit -->
-                                <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" 
-                                    *ngIf="isEditedProduct">
+                                <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" *ngIf="isEditedProduct">
                                     <button mat-flat-button color="" (click)="onCancelEditProduct()">
                                         Cancel
                                     </button>

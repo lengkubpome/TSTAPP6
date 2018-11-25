@@ -7,13 +7,13 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { reducers, FEATURE_NAME } from './product-management.state';
-import { ProductEffect } from './products/store';
+import { ProductEffect } from './store';
 
-import { InventoryComponent } from './inventory/inventory.component';
-import { ProductListComponent } from './products/product-list/product-list.component';
+import { InventoryComponent } from './containers/inventory/inventory.component';
+import { ProductListComponent } from './containers/products/product-list/product-list.component';
 import { FuseWidgetModule } from '@fuse/components';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { allProductService } from './products/service';
+import { ProductDetailComponent } from './containers/products/product-detail/product-detail.component';
+import { allProductService } from './service';
 
 const routes: Routes = [
     {

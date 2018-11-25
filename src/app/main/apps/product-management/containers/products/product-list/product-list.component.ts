@@ -1,4 +1,4 @@
-import { ProductService } from './../service/product.service';
+import { ProductService } from '../../../service/product.service';
 import { Store, select } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
@@ -11,12 +11,12 @@ import {
     OnDestroy
 } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Product, demo_products } from '../model/product.model';
+import { Product } from '../../../model/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { State } from '../../product-management.state';
-import * as fromProductStore from '../store';
-import { takeUntil } from 'rxjs/operators';
+import { State } from '../../../product-management.state';
+import * as fromProductStore from '../../../store';
+
 
 @Component({
     selector: 'app-product-list',
@@ -61,9 +61,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
 
     newProduct(): void {
-        this.productService
-            .checkProductById('MOrdrql9YPr25Nyzxdsv')
-            .subscribe(res => console.log(res));
     }
 
     selectProduct(productId: string): void {
