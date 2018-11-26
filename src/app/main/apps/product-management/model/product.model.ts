@@ -1,10 +1,10 @@
 export interface Product {
 	id: string | null;
-	name: string;
-	code: string;
-	description: string;
-	price: number;
-	active: boolean;
+	name?: string;
+	code?: string;
+	description?: string;
+	price?: number;
+	active?: boolean;
 }
 
 export interface ProductHistory {

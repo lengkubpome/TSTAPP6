@@ -3,6 +3,7 @@ import { getProductManagementState, ProductManagementState } from '../../product
 
 import { productAdapter } from '../adapters';
 import * as fromProduct from '../reducers/product.reducer';
+import { ProductHistory } from '../../model/product.model';
 
 // From ProductManagement State
 export const getProductState = createSelector(
@@ -39,9 +40,6 @@ export const selectCurrentProduct = createSelector(
 export const selectProductHistory = createSelector(getProductState, fromProduct.getSelectedProductHistory);
 
 export const selectPriceHistory = createSelector(selectProductHistory, (productHistory) => {
-	let res = [];
-	productHistory.forEach((arr) => {
-		if (arr.product_update.price !== undefined) res = [ ...res, arr ];
-	});
-	return res;
+    // return productHistory.filter(p => p.product_update.price !== undefined)
+    return productHistory;
 });

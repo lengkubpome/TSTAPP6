@@ -6,13 +6,15 @@ import { map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as fromProductManagement from '../product-management.state';
+import * as fromProductStore from '../store';
 
 @Injectable()
 export class ProductService {
 	private BUSINESS_ID: string;
 
 	constructor(private afs: AngularFirestore, private store: Store<fromProductManagement.State>) {
-		this.BUSINESS_ID = '0406069000354';
+        this.BUSINESS_ID = '0406069000354';
+        
 	}
 
 	getProducts(): Observable<Product[]> {

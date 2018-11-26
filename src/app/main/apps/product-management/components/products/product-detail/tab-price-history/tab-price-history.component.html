@@ -1,0 +1,66 @@
+<div fusePerfectScrollbar>
+    <div class="section pb-48">
+        <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+            <div class="datepickers" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                <mat-form-field color="accent" fxFlex="100">
+                    <mat-label>From Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" />
+                    <mat-datepicker-toggle matPrefix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field color="accent" fxFlex="100">
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="picker2" />
+                    <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="" class="m-0">
+                <input matInput placeholder="Search" />
+                <span matSuffix>
+                    <mat-icon>search</mat-icon>
+                    &nbsp;
+                </span>
+            </mat-form-field>
+        </div>
+
+        <mat-table class="products-table" #table [dataSource]="" matSort [@animateStagger]="{ value: '50' }"
+            fusePerfectScrollbar>
+            <!-- Code Column -->
+            <ng-container matColumnDef="dateTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>dateTime</mat-header-cell>
+                <mat-cell *matCellDef="let product">
+                    <p class="text-truncate">
+                        {{ product.dateTime }}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Category Column -->
+            <ng-container matColumnDef="editor">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>editor</mat-header-cell>
+                <mat-cell *matCellDef="let product">
+                    <p class="text-truncate">
+                        {{ product.editor }}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+
+
+            <mat-header-row *matHeaderRowDef="
+                    displayedColumns;
+                    sticky: true
+                "></mat-header-row>
+
+            <mat-row *matRowDef="
+                    let product;
+                    columns: displayedColumns
+                "
+                class="product" matRipple>
+            </mat-row>
+        </mat-table>
+    </div>
+</div>
