@@ -1,13 +1,17 @@
 <app-product-list 
     *ngIf="!isSelectedProduct" 
     [products]="products$ | async" 
-    (selectProduct)="selectProduct($event)">
+    (selectProduct)="onSelectProduct($event)">
 </app-product-list>
 <app-product-detail
     *ngIf="isSelectedProduct" 
     [product]="product$ | async"
     [productHistory]=""
     [productPriceHistory]="productPriceHistory$ | async"
-    (goBack)="cancelSelectedProduct()">
+    [isEditMode$]="isEditMode$"
+    (editMode)="onEditMode()"
+    (saveEditMode)="onSaveEditMode()"
+    (cancelEditMode)="onCancelEditMode()"
+    (goBack)="onCancelSelectedProduct()">
 
 </app-product-detail>

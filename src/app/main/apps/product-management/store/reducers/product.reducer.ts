@@ -9,6 +9,7 @@ export interface ProductState extends EntityState<Product> {
 	// selectedProduct: { productId: string; history: ProductHistory[] };
 	selectedProductId: string | null;
 	selectProductHistory: ProductHistory[] | null;
+	editMode: boolean;
 	loaded: boolean;
 	loading: boolean;
 	error: string | null;
@@ -17,6 +18,7 @@ export interface ProductState extends EntityState<Product> {
 const initialState: ProductState = productAdapter.getInitialState({
 	selectedProductId: null,
 	selectProductHistory: null,
+	editMode: false,
 	loaded: false,
 	loading: false,
 	error: null
@@ -24,7 +26,6 @@ const initialState: ProductState = productAdapter.getInitialState({
 
 export function productReducer(state = initialState, action: fromActions.PRODUCT_ACTIONS): ProductState {
 	switch (action.type) {
-
 		case fromActions.LOAD_PRODUCT_SUCCESS: {
 			return productAdapter.addAll(action.payload.products, {
 				...state,
@@ -64,6 +65,19 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 			});
 		}
 
+		case fromActions.EDIT_MODE: {
+			return Object.assign({
+				...state,
+				editMode: true
+			});
+		}
+		case fromActions.CANCEL_EDIT_MODE: {
+			return Object.assign({
+				...state,
+				editMode: false
+			});
+		}
+
 		case fromActions.LOAD_PRODUCT_HISTORY: {
 			return Object.assign({
 				...state,
@@ -89,7 +103,7 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 				selectProductHistory: null,
 				loading: false,
 				loaded: false,
-				error: null
+				error: action.payload.errorMessage
 			});
 		}
 
@@ -101,5 +115,6 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 
 export const getProductLoading = (state: ProductState) => state.loading;
 export const getProductLoaded = (state: ProductState) => state.loaded;
+export const getEditMode = (state: ProductState) => state.editMode;
 export const getSelectedProductId = (state: ProductState) => state.selectedProductId;
 export const getSelectedProductHistory = (state: ProductState) => state.selectProductHistory;

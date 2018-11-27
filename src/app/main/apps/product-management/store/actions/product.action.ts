@@ -7,9 +7,10 @@ export const LOAD_PRODUCT_SUCCESS = '[Product] Load Success';
 export const LOAD_PRODUCT_FAIL = '[Product] Load Fail';
 
 export const SELECT_PRODUCT = '[Product] Selecte Product';
-export const SELECTED_PRODUCT = '[Product]  Selected Product';
 export const CLEAR_SELECTED_PRODUCT = '[Product] Clear Selected Product';
-// INITIALIZE_PRODUCT = '[Product] Initialize Product',
+
+export const EDIT_MODE = '[Product] Edit Mode';
+export const CANCEL_EDIT_MODE = '[Product] Cancel Edit Mode';
 
 export const UPDATE_PRODUCT = '[Product] Update Product';
 //   UPDATE_PRODUCT_SUCCESS = '[Product] Update Product Success',
@@ -23,10 +24,16 @@ export const DELETE_PRODUCT = '[Product] Delete Product';
 //   DELETE_PRODUCT_SUCCESS = '[Product] Delete Product Success',
 //   DELETE_PRODUCT_FAIL = '[Product] Delete Product Fail'
 
+// Product History
 export const LOAD_PRODUCT_HISTORY = '[Product History] Load Data';
 export const LOAD_PRODUCT_HISTORY_FAIL = '[Product History] Load Data Fail';
 export const LOAD_PRODUCT_HISTORY_SUCCESS = '[Product History] Load Data Success';
 
+export const ADD_PRODUCT_HISTORY = '[Product History] Add Data';
+export const ADD_PRODUCT_HISTORY_FAIL = '[Product History] Add Data Fail';
+export const ADD_PRODUCT_HISTORY_SUCCESS = '[Product History] Add Data Success';
+
+// Action
 export class LoadProduct implements Action {
 	readonly type = LOAD_PRODUCT;
 	constructor() {}
@@ -47,8 +54,16 @@ export class SelectProduct implements Action {
 	constructor(public payload: { productId: string }) {}
 }
 
-export class UnselectProduct implements Action {
+export class ClearSelectedProduct implements Action {
 	readonly type = CLEAR_SELECTED_PRODUCT;
+}
+
+export class EditMode implements Action {
+	readonly type = EDIT_MODE;
+}
+
+export class CancelEditMode implements Action {
+	readonly type = CANCEL_EDIT_MODE;
 }
 
 export class LoadProductHistory implements Action {
@@ -64,12 +79,27 @@ export class LoadProductHistorySuccess implements Action {
 	constructor(public payload: { histories: ProductHistory[] }) {}
 }
 
+export class AddProductHistory implements Action {
+    readonly type = LOAD_PRODUCT_HISTORY;
+    constructor(public payload: { productId: string }) {}
+}
+export class AddProductHistoryFail implements Action {
+	readonly type = LOAD_PRODUCT_HISTORY_FAIL;
+	constructor(public payload: { errorMessage: string }) {}
+}
+export class AddProductHistorySuccess implements Action {
+	readonly type = LOAD_PRODUCT_HISTORY_SUCCESS;
+	constructor(public payload: { history: ProductHistory }) {}
+}
+
 export type PRODUCT_ACTIONS =
 	| LoadProduct
 	| LoadProductSuccess
 	| LoadProductFail
 	| SelectProduct
-	| UnselectProduct
+    | ClearSelectedProduct
+    | EditMode
+    | CancelEditMode
 	| LoadProductHistory
 	| LoadProductHistoryFail
 	| LoadProductHistorySuccess;

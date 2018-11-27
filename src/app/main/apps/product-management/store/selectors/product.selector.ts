@@ -32,6 +32,8 @@ export const selectCurrentProduct = createSelector(
 	}
 );
 
+export const selectEditMode = createSelector(getProductState, fromProduct.getEditMode);
+
 // Get History
 
 export const selectProductHistory = createSelector(getProductState, fromProduct.getSelectedProductHistory);

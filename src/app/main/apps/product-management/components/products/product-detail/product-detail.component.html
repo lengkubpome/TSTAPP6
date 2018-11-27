@@ -41,7 +41,7 @@
                         value: '*',
                         params: { delay: '100ms', x: '25px' }
                     }"
-                    *ngIf="selectedTab === 0 && !isEditedProduct">
+                    *ngIf="selectedTab === 0 && !isEditMode">
                     <mat-icon>settings</mat-icon> &nbsp; <span>Settings </span>&nbsp;<mat-icon>arrow_drop_down</mat-icon>
                 </button>
 
@@ -67,23 +67,23 @@
                         <!-- Basic Tab -->
                         <mat-tab label="Basic Info">
                             <tab-infomation class="tab-content p-24" 
-                                [editMode]="isEditedProduct" 
+                                [isEditMode$]="isEditMode$" 
                                 [productInfo]="product"
-                                (saveEditProduct)="saveEditProduct()"
-                                (cancelEditProduct)="cancelEditProduct()"></tab-infomation>
+                                (saveEditProduct)="onSaveEditProduct()"
+                                (cancelEditProduct)="onCancelEditProduct()"></tab-infomation>
                         </mat-tab>
                         <!-- End Basic Tab -->
 
 
                         <!-- Price History Tab -->
-                        <mat-tab label="Price History" [disabled]="isEditedProduct">
+                        <mat-tab label="Price History" [disabled]="isEditMode">
                             <tab-price-history class="tab-content p-24"
                                 [productPriceHistory]="productPriceHistory"></tab-price-history>
                         </mat-tab>
                         <!-- End Price History Tab -->
 
                         <!-- Setting Inventory -->
-                        <mat-tab label="Setting" [disabled]="isEditedProduct">
+                        <mat-tab label="Setting" [disabled]="isEditMode">
                             <tab-setting class="tab-content p-24"></tab-setting>
                         </mat-tab>
                         <!-- Setting Inventory -->

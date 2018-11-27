@@ -1,14 +1,6 @@
 import { fuseAnimations } from '@fuse/animations';
-import {
-	Component,
-	OnInit,
-	ViewEncapsulation,
-	OnDestroy,
-	Input,
-	Output,
-	EventEmitter
-} from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material';
 
 import { Product, ProductHistory } from '../../../model/product.model';
@@ -23,11 +15,15 @@ import { Product, ProductHistory } from '../../../model/product.model';
 export class ProductDetailComponent implements OnInit, OnDestroy {
 	productStatus: string;
 	selectedTab = 0;
-	isEditedProduct = false;
+	isEditMode = false;
 
 	@Input() product: Product;
 	@Input() productHistory: ProductHistory[] = [];
 	@Input() productPriceHistory: ProductHistory[] = [];
+	@Input() isEditMode$: Observable<boolean>;
+	@Output() editMode = new EventEmitter<void>();
+	@Output() saveEditMode = new EventEmitter<any>();
+	@Output() cancelEditMode = new EventEmitter<void>();
 	@Output() goBack = new EventEmitter<void>();
 
 	// Private
@@ -37,7 +33,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 		this.unsubscribe$ = new Subject();
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.isEditMode$.subscribe((mode) => (this.isEditMode = mode));
+	}
 
 	ngOnDestroy(): void {
 		// Unsubscribe from all subscriptions
@@ -50,18 +48,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	}
 
 	onEditProduct(): void {
-		this.isEditedProduct = true;
+		this.editMode.emit();
 	}
 
 	onDelectProduct(): void {
 		console.log('Delete Product');
 	}
 
-	saveEditProduct(): void {
-		this.isEditedProduct = false;
+	onSaveEditProduct(): void {
+		this.saveEditMode.emit();
 	}
-	cancelEditProduct(): void {
-		this.isEditedProduct = false;
+	onCancelEditProduct(): void {
+		this.cancelEditMode.emit();
 	}
 
 	onGoBack(): void {

@@ -1,7 +1,9 @@
 import { Product } from './../../../../model/product.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
-import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'tab-infomation',
@@ -10,21 +12,27 @@ import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } fro
 	encapsulation: ViewEncapsulation.None,
 	animations: fuseAnimations
 })
-export class TabInfomationComponent implements OnInit {
+export class TabInfomationComponent implements OnInit, OnDestroy {
+	unsubscribe$ = new Subject<void>();
 	detailProductForm: FormGroup;
-	productStatus: string;
+	productActive: boolean;
 	isChangingPrice = false;
+	isEditMode = false;
 
-    @Input() editMode: boolean;
-    @Input() productInfo: Product;
-    @Output() saveEditProduct = new EventEmitter<any>()
-    @Output() cancelEditProduct = new EventEmitter<any>()
+	@Input() isEditMode$: Observable<boolean>;
+	@Input() productInfo: Product;
+	@Output() saveEditProduct = new EventEmitter<any>();
+	@Output() cancelEditProduct = new EventEmitter<any>();
 
-	constructor(private _formBuilder: FormBuilder) {}
+	constructor(private formBuilder: FormBuilder) {}
 
 	ngOnInit(): void {
 		this.detailProductForm = this.createProductForm();
-		this.productStatus = 'Active';
+		this.editedProductForm();
+	}
+	ngOnDestroy(): void {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 
 	onChangePrice(): void {
@@ -38,8 +46,7 @@ export class TabInfomationComponent implements OnInit {
 	onCancelChangePrice(): void {
 		this.isChangingPrice = false;
 		this.detailProductForm.get('price').disable();
-    }
-    
+	}
 
 	onSaveEditProduct(): void {
 		this.saveEditProduct.emit();
@@ -49,11 +56,31 @@ export class TabInfomationComponent implements OnInit {
 	}
 
 	createProductForm(): FormGroup {
-		return this._formBuilder.group({
-			name: [this.productInfo.name],
-			code: [this.productInfo.code],
-			detail: [this.productInfo.description],
-			price: [this.productInfo.price]
+        this.productActive = this.productInfo.active;
+
+		return this.formBuilder.group({
+			name: [ { value: this.productInfo.name, disabled: true } ],
+			code: [ { value: this.productInfo.code, disabled: true } ],
+			detail: [ { value: this.productInfo.description, disabled: true } ],
+			price: [ { value: this.productInfo.price, disabled: true } ]
+		});
+	}
+
+	editedProductForm(): void {
+		this.isEditMode$.pipe(takeUntil(this.unsubscribe$)).subscribe((isEdit) => {
+			if (isEdit) {
+				this.detailProductForm.get('name').enable();
+				this.detailProductForm.get('code').enable();
+				this.detailProductForm.get('detail').enable();
+				this.detailProductForm.get('price').enable();
+				this.isEditMode = true;
+			} else {
+				this.detailProductForm.get('name').disable();
+				this.detailProductForm.get('code').disable();
+				this.detailProductForm.get('detail').disable();
+				this.detailProductForm.get('price').disable();
+				this.isEditMode = false;
+			}
 		});
 	}
 }

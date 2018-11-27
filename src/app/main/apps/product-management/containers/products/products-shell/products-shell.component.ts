@@ -21,6 +21,7 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 	product$: Observable<Product>;
 	productHistory$: Observable<ProductHistory[]>;
 	productPriceHistory$: Observable<ProductHistory[]>;
+	isEditMode$: Observable<boolean>;
 
 	isSelectedProduct = false;
 	unsubscribe$ = new Subject<void>();
@@ -36,6 +37,7 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 		this.products$ = this.store.pipe(select(fromProductStore.selectAllProducts));
 		this.product$ = this.store.pipe(select(fromProductStore.selectCurrentProduct));
 		this.productPriceHistory$ = this.store.pipe(select(fromProductStore.selectPriceHistory));
+		this.isEditMode$ = this.store.pipe(select(fromProductStore.selectEditMode));
 
 		this.store.dispatch(new fromProductStore.LoadProduct());
 	}
@@ -45,7 +47,7 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 		this.unsubscribe$.complete();
 	}
 
-	selectProduct(productId: string): void {
+	onSelectProduct(productId: string): void {
 		const url = this.router.createUrlTree([ {} ], { relativeTo: this.route.parent }).toString();
 		this.location.go(`${url}/product/${productId}`);
 
@@ -53,7 +55,22 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 		this.isSelectedProduct = true;
 	}
 
-	cancelSelectedProduct(): void {
+	onEditMode(): void {
+        console.log('Edit Mode');
+        this.store.dispatch(new fromProductStore.EditMode());
+    }
+
+	onSaveEditMode(): void {
+        console.log('Update Product');
+        this.store.dispatch(new fromProductStore.CancelEditMode());
+    }
+
+	onCancelEditMode(): void {
+        console.log('Cancel Edit Mode');
+        this.store.dispatch(new fromProductStore.CancelEditMode());
+    }
+
+	onCancelSelectedProduct(): void {
 		const url = this.router.createUrlTree([ {} ], { relativeTo: this.route }).toString();
 		this.location.go(url);
 

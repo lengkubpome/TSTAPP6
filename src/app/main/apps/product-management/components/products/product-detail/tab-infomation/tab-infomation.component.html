@@ -3,25 +3,25 @@ fxLayout="column" fxLayoutAlign="start">
 <div fxLayout="row" fxLayoutAlign="end start" class="mat-title">
     <span class="h3"> Product is inactive.</span>
     <button mat-stroked-button [matMenuTriggerFor]="menu" type="button" [color]="
-            productStatus === 'Inactive'
-                ? 'warn'
-                : 'accent'
+            productActive 
+                ? 'accent'
+                : 'warn'
         ">
-        {{ productStatus }}
+        {{ productActive? 'Active': 'Inactive' }}
         <!-- &nbsp;<mat-icon>arrow_drop_down</mat-icon> -->
     </button>
     <mat-menu #menu="matMenu">
-        <button *ngIf="editMode" mat-menu-item (click)="productStatus = 'Active'">
+        <button *ngIf="isEditMode" mat-menu-item (click)="productActive = true">
             <mat-icon>{{
-                productStatus === 'Active'
+                productActive
                 ? 'check'
                 : ''
                 }}</mat-icon>
             Active
         </button>
-        <button *ngIf="editMode" mat-menu-item (click)="productStatus = 'Inactive'">
+        <button *ngIf="isEditMode" mat-menu-item (click)="productActive = false">
             <mat-icon>{{
-                productStatus === 'Inactive'
+               !productActive
                 ? 'check'
                 : ''
                 }}</mat-icon>
@@ -33,11 +33,11 @@ fxLayout="column" fxLayoutAlign="start">
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
     <mat-form-field appearance="outline" class="w-100-p mr-8">
         <mat-label>Product Name</mat-label>
-        <input matInput placeholder="Please enter the information " formControlName="name" />
+        <input matInput type="text" placeholder="Please enter the information " formControlName="name" />
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100-p">
         <mat-label>Product Code</mat-label>
-        <input matInput placeholder="Please enter the information " formControlName="code" />
+        <input matInput type="text" placeholder="Please enter the information " formControlName="code" />
     </mat-form-field>
 </div>
 
@@ -49,9 +49,9 @@ fxLayout="column" fxLayoutAlign="start">
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
     <mat-form-field appearance="outline" fxFlex class="mt-10">
         <mat-label>Price</mat-label>
-        <input matInput placeholder="Please enter the information " formControlName="price" />
+        <input matInput type="number" placeholder="Please enter the information " formControlName="price" />
     </mat-form-field>
-    <div fxLayout="row" fxLayoutGap="10px" *ngIf="!editMode">
+    <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isEditMode">
         <div *ngIf="isChangingPrice" >
             <button mat-icon-button color="primary" (click)="onSaveChangePrice()">
                 <mat-icon>done</mat-icon>
@@ -63,7 +63,7 @@ fxLayout="column" fxLayoutAlign="start">
 
         <button mat-flat-button color="accent" *ngIf="isChangingPrice === false"
             [disabled]="
-                productStatus === 'Inactive'
+                !productActive
                     ? true
                     : false
             "
@@ -73,7 +73,7 @@ fxLayout="column" fxLayoutAlign="start">
     </div>
 </div>
 <!-- Button Edit -->
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" *ngIf="editMode">
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" *ngIf="isEditMode">
     <button mat-flat-button color="" (click)="onCancelEditProduct()">
         Cancel
     </button>
