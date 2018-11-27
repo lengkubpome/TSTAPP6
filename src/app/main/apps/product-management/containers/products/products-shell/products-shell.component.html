@@ -1,0 +1,13 @@
+<app-product-list 
+    *ngIf="!isSelectedProduct" 
+    [products]="products$ | async" 
+    (selectProduct)="selectProduct($event)">
+</app-product-list>
+<app-product-detail
+    *ngIf="isSelectedProduct" 
+    [product]="product$ | async"
+    [productHistory]=""
+    [productPriceHistory]="productPriceHistory$ | async"
+    (goBack)="cancelSelectedProduct()">
+
+</app-product-detail>

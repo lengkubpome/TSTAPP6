@@ -14,17 +14,18 @@ import { allProductService } from './service';
 
 // container
 import { InventoryComponent } from './containers/inventory/inventory.component';
-import { ProductListComponent } from './containers/products/product-list/product-list.component';
-import { ProductDetailComponent } from './containers/products/product-detail/product-detail.component';
+import { ProductListComponent } from './components/products/product-list/product-list.component';
+import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 // component
 import { TabSettingComponent } from './components/products/product-detail/tab-setting/tab-setting.component';
 import { TabPriceHistoryComponent } from './components/products/product-detail/tab-price-history/tab-price-history.component';
 import { TabInfomationComponent } from './components/products/product-detail/tab-infomation/tab-infomation.component';
+import { ProductsShellComponent } from './containers/products/products-shell/products-shell.component';
 
 const routes: Routes = [
     {
         path: 'products',
-        component: ProductListComponent,
+        component: ProductsShellComponent,
         resolve: {
             // data: EcommerceProductsService
         }
@@ -60,7 +61,8 @@ const routes: Routes = [
         ProductDetailComponent,
         TabSettingComponent,
         TabPriceHistoryComponent,
-        TabInfomationComponent
+        TabInfomationComponent,
+        ProductsShellComponent
     ],
     providers: [allProductService]
 })

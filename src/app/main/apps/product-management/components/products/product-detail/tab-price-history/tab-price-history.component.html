@@ -26,7 +26,7 @@
             </mat-form-field>
         </div>
 
-        <mat-table class="products-table" #table [dataSource]="" matSort [@animateStagger]="{ value: '50' }"
+        <mat-table class="products-table" #table [dataSource]="productPriceHistory" matSort [@animateStagger]="{ value: '50' }"
             fusePerfectScrollbar>
             <!-- Code Column -->
             <ng-container matColumnDef="dateTime">
@@ -34,6 +34,16 @@
                 <mat-cell *matCellDef="let product">
                     <p class="text-truncate">
                         {{ product.dateTime }}
+                    </p>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Category Column -->
+            <ng-container matColumnDef="product_update.price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell *matCellDef="let product">
+                    <p class="text-truncate">
+                        {{ product.product_update.price }}
                     </p>
                 </mat-cell>
             </ng-container>

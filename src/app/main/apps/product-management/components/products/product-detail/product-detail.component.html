@@ -9,7 +9,7 @@
         <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
             <!-- APP TITLE -->
             <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/apps/product-management/products'">
+                <button mat-icon-button class="mr-0 mr-sm-16" (click)="onGoBack()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
@@ -78,7 +78,7 @@
                         <!-- Price History Tab -->
                         <mat-tab label="Price History" [disabled]="isEditedProduct">
                             <tab-price-history class="tab-content p-24"
-                                [priceHistory]="productPricHistories"></tab-price-history>
+                                [productPriceHistory]="productPriceHistory"></tab-price-history>
                         </mat-tab>
                         <!-- End Price History Tab -->
 

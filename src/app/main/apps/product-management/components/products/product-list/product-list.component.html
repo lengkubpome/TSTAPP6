@@ -48,7 +48,7 @@
         <div class="content-card">
 
                 <mat-table class="products-table"
-                       #table [dataSource]="productList$ | async"
+                       #table [dataSource]="products"
                        matSort
                        [@animateStagger]="{value:'50'}"
                        fusePerfectScrollbar>
@@ -94,7 +94,7 @@
                 <mat-row *matRowDef="let product; columns: displayedColumns;"
                          class="product"
                          matRipple
-                         (click)="selectProduct(product.id)">
+                         (click)="onSelectProduct(product.id)">
                 </mat-row>
 
             </mat-table>

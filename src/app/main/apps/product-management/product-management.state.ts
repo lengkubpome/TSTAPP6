@@ -14,7 +14,7 @@ export interface ProductManagementState  {
 }
 
 export const reducers: ActionReducerMap<ProductManagementState> = {
-    products: fromProduct.productReducer
+    products: fromProduct.productReducer,
 };
 
 export const getProductManagementState = createFeatureSelector<

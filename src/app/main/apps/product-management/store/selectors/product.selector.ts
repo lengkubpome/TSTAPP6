@@ -3,7 +3,6 @@ import { getProductManagementState, ProductManagementState } from '../../product
 
 import { productAdapter } from '../adapters';
 import * as fromProduct from '../reducers/product.reducer';
-import { ProductHistory } from '../../model/product.model';
 
 // From ProductManagement State
 export const getProductState = createSelector(
@@ -11,9 +10,7 @@ export const getProductState = createSelector(
 	(state: ProductManagementState) => state.products
 );
 
-
 const { selectIds, selectEntities, selectAll, selectTotal } = productAdapter.getSelectors();
-
 
 // select the total product count
 export const selectProductTotal = selectTotal;
@@ -38,8 +35,12 @@ export const selectCurrentProduct = createSelector(
 // Get History
 
 export const selectProductHistory = createSelector(getProductState, fromProduct.getSelectedProductHistory);
+export const selectProductLoaded = createSelector(getProductState, fromProduct.getProductLoaded);
 
-export const selectPriceHistory = createSelector(selectProductHistory, (productHistory) => {
-    // return productHistory.filter(p => p.product_update.price !== undefined)
-    return productHistory;
-});
+export const selectPriceHistory = createSelector(
+	selectProductHistory,
+	selectProductLoaded,
+	(productHistory, loaded) => {
+		return loaded ? productHistory.filter((p) => p.product_update.hasOwnProperty('price')) : [];
+	}
+);

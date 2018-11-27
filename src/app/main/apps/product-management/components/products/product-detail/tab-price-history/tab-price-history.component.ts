@@ -2,8 +2,7 @@ import { ProductHistory } from './../../../../model/product.model';
 import { fuseAnimations } from '@fuse/animations';
 import { Subject, Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, ViewEncapsulation, Input } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Product, demo_products } from '../../../../model/product.model';
+import { MatPaginator, MatSort } from '@angular/material';
 
 @Component({
 	selector: 'tab-price-history',
@@ -13,9 +12,9 @@ import { Product, demo_products } from '../../../../model/product.model';
 	animations: fuseAnimations
 })
 export class TabPriceHistoryComponent implements OnInit, OnDestroy {
-	displayedColumns: string[] = [ 'dateTime', 'editor' ];
+	displayedColumns: string[] = [ 'dateTime', 'product_update.price', 'editor' ];
 
-	@Input() priceHistory: ProductHistory[];
+	@Input() productPriceHistory: ProductHistory[];
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
@@ -26,8 +25,7 @@ export class TabPriceHistoryComponent implements OnInit, OnDestroy {
 		this.unsubscribe$ = new Subject();
 	}
 
-	ngOnInit(): void {
-	}
+	ngOnInit(): void {}
 
 	ngOnDestroy(): void {
 		// Unsubscribe from all subscriptions
