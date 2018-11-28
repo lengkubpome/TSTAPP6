@@ -1,4 +1,3 @@
-
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { Routes, RouterModule } from '@angular/router';
@@ -21,49 +20,52 @@ import { TabSettingComponent } from './components/products/product-detail/tab-se
 import { TabPriceHistoryComponent } from './components/products/product-detail/tab-price-history/tab-price-history.component';
 import { TabInfomationComponent } from './components/products/product-detail/tab-infomation/tab-infomation.component';
 import { ProductsShellComponent } from './containers/products/products-shell/products-shell.component';
+import { ProductNewComponent } from './components/products/product-new/product-new.component';
 
 const routes: Routes = [
-    {
-        path: 'products',
-        component: ProductsShellComponent,
-        resolve: {
-            // data: EcommerceProductsService
-        }
-    },
-    {
-        path: 'products/:id',
-        component: ProductDetailComponent,
-        resolve: {
-            // data: EcommerceProductService
-        }
-    },
-    {
-        path: 'inventory',
-        component: InventoryComponent,
-        resolve: {
-            // data: EcommerceProductsService
-        }
-    }
+	{
+		path: 'products',
+		component: ProductsShellComponent,
+		resolve: {
+			// data: EcommerceProductsService
+		}
+	},
+	{
+		path: 'products/:id',
+		component: ProductDetailComponent,
+		resolve: {
+			// data: EcommerceProductService
+		}
+	},
+	{
+		path: 'inventory',
+		component: InventoryComponent,
+		resolve: {
+			// data: EcommerceProductsService
+		}
+	}
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-        TranslateModule,
-        FuseSharedModule,
-        FuseWidgetModule,
-        StoreModule.forFeature(FEATURE_NAME, reducers),
-        EffectsModule.forFeature([ProductEffect])
-    ],
-    declarations: [
-        InventoryComponent,
-        ProductListComponent,
-        ProductDetailComponent,
-        TabSettingComponent,
-        TabPriceHistoryComponent,
-        TabInfomationComponent,
-        ProductsShellComponent
-    ],
-    providers: [allProductService]
+	imports: [
+		RouterModule.forChild(routes),
+		TranslateModule,
+		FuseSharedModule,
+		FuseWidgetModule,
+		StoreModule.forFeature(FEATURE_NAME, reducers),
+		EffectsModule.forFeature([ ProductEffect ])
+	],
+	declarations: [
+		InventoryComponent,
+		ProductListComponent,
+		ProductDetailComponent,
+		TabSettingComponent,
+		TabPriceHistoryComponent,
+		TabInfomationComponent,
+		ProductsShellComponent,
+		ProductNewComponent
+	],
+	providers: [ allProductService ],
+	entryComponents: [ ProductNewComponent ]
 })
 export class ProductManagementModule {}

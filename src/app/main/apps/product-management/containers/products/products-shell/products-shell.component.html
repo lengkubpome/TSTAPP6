@@ -1,7 +1,8 @@
 <app-product-list 
     *ngIf="!isSelectedProduct" 
     [products]="products$ | async" 
-    (selectProduct)="onSelectProduct($event)">
+    (selectProduct)="onSelectProduct($event)"
+    (newProduct)="onNewProduct()">
 </app-product-list>
 <app-product-detail
     *ngIf="isSelectedProduct" 

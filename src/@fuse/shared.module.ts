@@ -24,7 +24,8 @@ import {
     MatTabsModule,
     MatDatepickerModule,
     MatMenuModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -58,6 +59,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         MatDatepickerModule,
         MatMenuModule,
         MatSlideToggleModule,
+        MatDialogModule,
 
         NgxChartsModule
     ],
@@ -89,6 +91,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
          MatDatepickerModule,
          MatMenuModule,
          MatSlideToggleModule,
+         MatDialogModule,
 
          NgxChartsModule
     ]

@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     @Input() products: Product[];
 
     @Output() selectProduct = new EventEmitter<string>()
+    @Output() newProduct = new EventEmitter<void>()
 
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
@@ -45,7 +46,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
 
-    newProduct(): void {
+    onNewProduct(): void {
+        this.newProduct.emit();
     }
 
     onSelectProduct(productId: string): void {

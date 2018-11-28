@@ -1,0 +1,85 @@
+<!-- <form [formGroup]="detailProductForm" fusePerfectScrollbar
+fxLayout="column" fxLayoutAlign="start">
+
+<div fxLayout="row" fxLayoutAlign="start" class="mb-8">
+    <span class="mat-title"> Create New Product</span>
+</div>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+    <mat-form-field appearance="outline" class="w-100-p mr-8">
+        <mat-label>Product Name</mat-label>
+        <input matInput type="text" placeholder="Please enter the information " formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>Product Code</mat-label>
+        <input matInput type="text" placeholder="Please enter the information " formControlName="code" />
+    </mat-form-field>
+</div>
+
+<mat-form-field appearance="outline" class="w-100-p">
+    <mat-label>Product Description</mat-label>
+    <textarea matInput placeholder="Product Description" rows="3" formControlName="description"></textarea>
+</mat-form-field>
+
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <mat-form-field appearance="outline" fxFlex class="mt-10">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" placeholder="Please enter the information " formControlName="price" />
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isEditMode">
+        <div *ngIf="isChangingPrice" >
+            <button mat-icon-button color="primary" (click)="onSaveChangePrice()">
+                <mat-icon>done</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onCancelChangePrice()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+        
+    </div>
+</div> 
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" >
+    <button mat-flat-button color="" (click)="onCancel()">
+        Cancel
+    </button>
+    <button mat-flat-button color="primary" (click)="onCreate()">
+        Save
+    </button>
+</div>
+</form>
+-->
+
+<h2 mat-dialog-title>Create New Product</h2>
+<mat-dialog-content class="mat-typography">
+<form [formGroup]="detailProductForm" fusePerfectScrollbar fxLayout="column" fxLayoutAlign="start">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+        <mat-form-field appearance="outline" class="w-100-p mr-8">
+            <mat-label>Product Name</mat-label>
+            <input matInput type="text" placeholder="Please enter the information " />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>Product Code</mat-label>
+            <input matInput type="text" placeholder="Please enter the information " />
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-100-p">
+        <mat-label>Product Description</mat-label>
+        <textarea matInput placeholder="Product Description" rows="3"></textarea>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <mat-form-field appearance="outline" fxFlex class="mt-10">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" placeholder="Please enter the information " />
+        </mat-form-field>
+
+    </div>
+</form>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px">
+
+    <button mat-flat-button mat-dialog-close (click)="onCancel()">Cancel</button>
+    <button mat-flat-button [mat-dialog-close]="true" color="primary" (click)="onCreate()">Create</button>
+</mat-dialog-actions>
