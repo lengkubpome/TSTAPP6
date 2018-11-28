@@ -13,8 +13,7 @@ export class ProductService {
 	private BUSINESS_ID: string;
 
 	constructor(private afs: AngularFirestore, private store: Store<fromProductManagement.State>) {
-        this.BUSINESS_ID = '0406069000354';
-        
+		this.BUSINESS_ID = '0406069000354';
 	}
 
 	getProducts(): Observable<Product[]> {
@@ -42,4 +41,8 @@ export class ProductService {
 			})
 		);
 	}
+
+	// updateProduct(product:Product): Observable<Product> {
+    //     return this.afs.collection(`business/${this.BUSINESS_ID}/products/${product.id}`).snapshotChanges()
+    // }
 }

@@ -25,11 +25,11 @@
                         params: { delay: '100ms', x: '-25px' }
                     }">
                     <div class="h2">
-                        {{ product.name}}
+                        {{ productInfo.name}}
                     </div>
                     <div class="h2" *ngIf="pageType === 'new'">New Product</div>
                     <div class="subtitle secondary-text">
-                        <span>{{ product.code }}</span>
+                        <span>{{ productInfo.code }}</span>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,8 @@
                         <mat-tab label="Basic Info">
                             <tab-infomation class="tab-content p-24" 
                                 [isEditMode$]="isEditMode$" 
-                                [productInfo]="product"
-                                (saveEditProduct)="onSaveEditProduct()"
+                                [productInfo]="productInfo"
+                                (saveEditProduct)="onSaveEditProduct($event)"
                                 (cancelEditProduct)="onCancelEditProduct()"></tab-infomation>
                         </mat-tab>
                         <!-- End Basic Tab -->

@@ -5,12 +5,12 @@
 </app-product-list>
 <app-product-detail
     *ngIf="isSelectedProduct" 
-    [product]="product$ | async"
+    [productInfo]="product$ | async"
     [productHistory]=""
     [productPriceHistory]="productPriceHistory$ | async"
     [isEditMode$]="isEditMode$"
     (editMode)="onEditMode()"
-    (saveEditMode)="onSaveEditMode()"
+    (saveEditMode)="onSaveEditMode($event)"
     (cancelEditMode)="onCancelEditMode()"
     (goBack)="onCancelSelectedProduct()">
 

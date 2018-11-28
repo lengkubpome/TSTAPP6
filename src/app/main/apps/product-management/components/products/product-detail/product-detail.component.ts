@@ -17,12 +17,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	selectedTab = 0;
 	isEditMode = false;
 
-	@Input() product: Product;
+	@Input() productInfo: Product;
 	@Input() productHistory: ProductHistory[] = [];
 	@Input() productPriceHistory: ProductHistory[] = [];
 	@Input() isEditMode$: Observable<boolean>;
 	@Output() editMode = new EventEmitter<void>();
-	@Output() saveEditMode = new EventEmitter<any>();
+	@Output() saveEditMode = new EventEmitter<Product>();
 	@Output() cancelEditMode = new EventEmitter<void>();
 	@Output() goBack = new EventEmitter<void>();
 
@@ -55,8 +55,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 		console.log('Delete Product');
 	}
 
-	onSaveEditProduct(): void {
-		this.saveEditMode.emit();
+	onSaveEditProduct(data: Product): void {
+        // this.productInfo = data;
+		this.saveEditMode.emit(data);
 	}
 	onCancelEditProduct(): void {
 		this.cancelEditMode.emit();

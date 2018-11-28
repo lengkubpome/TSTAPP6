@@ -56,19 +56,20 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 	}
 
 	onEditMode(): void {
-        console.log('Edit Mode');
-        this.store.dispatch(new fromProductStore.EditMode());
-    }
+		console.log('Edit Mode');
+		this.store.dispatch(new fromProductStore.EditMode());
+	}
 
-	onSaveEditMode(): void {
-        console.log('Update Product');
+	onSaveEditMode(data: Product): void {
+		// console.log(data);
+        // this.store.dispatch(new fromProductStore.UpdateProduct({ update: data }));
         this.store.dispatch(new fromProductStore.CancelEditMode());
-    }
+	}
 
 	onCancelEditMode(): void {
-        console.log('Cancel Edit Mode');
-        this.store.dispatch(new fromProductStore.CancelEditMode());
-    }
+		console.log('Cancel Edit Mode');
+		this.store.dispatch(new fromProductStore.CancelEditMode());
+	}
 
 	onCancelSelectedProduct(): void {
 		const url = this.router.createUrlTree([ {} ], { relativeTo: this.route }).toString();

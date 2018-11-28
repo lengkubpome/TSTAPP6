@@ -26,6 +26,14 @@ const initialState: ProductState = productAdapter.getInitialState({
 
 export function productReducer(state = initialState, action: fromActions.PRODUCT_ACTIONS): ProductState {
 	switch (action.type) {
+		case fromActions.LOAD_PRODUCT: {
+			return Object.assign({
+				...state,
+				loading: true,
+				loaded: false,
+				error: null
+			});
+		}
 		case fromActions.LOAD_PRODUCT_SUCCESS: {
 			return productAdapter.addAll(action.payload.products, {
 				...state,
@@ -75,6 +83,30 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 			return Object.assign({
 				...state,
 				editMode: false
+			});
+		}
+
+		case fromActions.UPDATE_PRODUCT: {
+			return Object.assign({
+				...state,
+				loading: true,
+				loaded: false
+			});
+		}
+		case fromActions.UPDATE_PRODUCT_SUCCESS: {
+			return productAdapter.updateOne(action.payload.product, {
+				...state,
+				loading: false,
+				loaded: true,
+				error: null
+			});
+		}
+		case fromActions.UPDATE_PRODUCT_FAIL: {
+			return Object.assign({
+				...state,
+				loading: false,
+				loaded: false,
+				error: action.payload.errorMessage
 			});
 		}
 

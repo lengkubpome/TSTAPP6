@@ -35,13 +35,14 @@ import { CustomSerializer } from './router/custom-serializer';
         StoreModule.forRoot(reducers, { metaReducers }),
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([AuthEffects]),
-        environment.production
-            ? []
-            : StoreDevtoolsModule.instrument({
-                  name: 'Angular NgRx Material Starter'
-              }),
+        
+        // environment.production
+        //     ? []
+        //     : StoreDevtoolsModule.instrument({
+        //           name: 'Angular NgRx Material Starter'
+        //       }),
 
-        !environment.production ? StoreDevtoolsModule.instrument() : []
+        // !environment.production ? StoreDevtoolsModule.instrument() : []
     ],
     declarations: [],
     providers: [

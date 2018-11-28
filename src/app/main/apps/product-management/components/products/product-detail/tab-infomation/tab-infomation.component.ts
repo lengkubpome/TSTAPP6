@@ -22,7 +22,7 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	@Input() isEditMode$: Observable<boolean>;
 	@Input() productInfo: Product;
 	@Output() saveEditProduct = new EventEmitter<any>();
-	@Output() cancelEditProduct = new EventEmitter<any>();
+	@Output() cancelEditProduct = new EventEmitter<void>();
 
 	constructor(private formBuilder: FormBuilder) {}
 
@@ -35,6 +35,7 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 		this.unsubscribe$.complete();
 	}
 
+	// Change Price
 	onChangePrice(): void {
 		this.isChangingPrice = true;
 		this.detailProductForm.get('price').enable();
@@ -45,18 +46,34 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	}
 	onCancelChangePrice(): void {
 		this.isChangingPrice = false;
+		this.setValueProductForm(this.productInfo);
 		this.detailProductForm.get('price').disable();
 	}
 
+	// Edit Product
 	onSaveEditProduct(): void {
-		this.saveEditProduct.emit();
+		const data: Product = {
+			id: this.productInfo.id,
+			active: this.productActive,
+			...this.detailProductForm.value
+		};
+
+		// let obj = {};
+		// Object.keys(data).map((key, index) => {
+		// 	return data[key] !== this.productInfo[key] ? { key: data[key], ...obj } : { ...obj };
+		// });
+
+		// console.log(obj);
+
+		this.saveEditProduct.emit(data);
 	}
 	onCancelEditProduct(): void {
+		this.setValueProductForm(this.productInfo);
 		this.cancelEditProduct.emit();
 	}
 
 	createProductForm(): FormGroup {
-        this.productActive = this.productInfo.active;
+		this.productActive = this.productInfo.active;
 
 		return this.formBuilder.group({
 			name: [ { value: this.productInfo.name, disabled: true } ],
@@ -82,5 +99,13 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 				this.isEditMode = false;
 			}
 		});
+	}
+
+	setValueProductForm(product: Product): void {
+		this.detailProductForm.get('name').setValue(product.name);
+		this.detailProductForm.get('code').setValue(product.code);
+		this.detailProductForm.get('detail').setValue(product.description);
+		this.detailProductForm.get('price').setValue(product.price);
+		this.productActive = product.active;
 	}
 }
