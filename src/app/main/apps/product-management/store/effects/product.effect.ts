@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, mergeMap, catchError, withLatestFrom, tap } from 'rxjs/operators';
 import { ProductService } from '../../service/product.service';
 import { Router } from '@angular/router';
 
@@ -62,4 +62,19 @@ export class ProductEffect {
 		})
 	);
 
+	// @Effect()
+	// updateProduct$: Observable<Action> = this.actions$.pipe(
+	// 	ofType(fromActions.UPDATE_PRODUCT),
+	// 	map((action: fromActions.UpdateProduct) => {
+	// 		const data = action.payload.update;
+	// 		return new fromActions.UpdateProductSuccess({ product: { id: data.id, changes: data } });
+
+	// 		// return this.productService
+	// 		// 	.getProductHistory(action.payload.productId)
+	// 		// 	.pipe(
+	// 		// 		map((histories) => new fromActions.LoadProductHistorySuccess({ histories })),
+	// 		// 		catchError((error) => of(new fromActions.LoadProductHistoryFail({ errorMessage: error })))
+	// 		// 	);
+	// 	}),
+	// );
 }
