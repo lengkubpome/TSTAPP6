@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductHistory } from './../../../model/product.model';
 import { Store, select } from '@ngrx/store';
@@ -60,10 +61,10 @@ export class ProductsShellComponent implements OnInit, OnDestroy {
 		this.store.dispatch(new fromProductStore.EditMode());
 	}
 
-	onSaveEditMode(data: Product): void {
+	onSaveEditMode(product: Update<Product>): void {
 		// console.log(data);
-        // this.store.dispatch(new fromProductStore.UpdateProduct({ update: data }));
-        this.store.dispatch(new fromProductStore.CancelEditMode());
+		this.store.dispatch(new fromProductStore.UpdateProduct({ product, editor: 'system1' }));
+		// this.store.dispatch(new fromProductStore.CancelEditMode());
 	}
 
 	onCancelEditMode(): void {

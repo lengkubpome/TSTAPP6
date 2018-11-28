@@ -39,10 +39,6 @@ export const selectEditMode = createSelector(getProductState, fromProduct.getEdi
 export const selectProductHistory = createSelector(getProductState, fromProduct.getSelectedProductHistory);
 export const selectProductLoaded = createSelector(getProductState, fromProduct.getProductLoaded);
 
-export const selectPriceHistory = createSelector(
-	selectProductHistory,
-	selectProductLoaded,
-	(productHistory, loaded) => {
-		return loaded ? productHistory.filter((p) => p.product_update.hasOwnProperty('price')) : [];
-	}
-);
+export const selectPriceHistory = createSelector(selectProductHistory, (productHistory) => {
+	return productHistory !== null ? productHistory.filter((p) => p.product_update.hasOwnProperty('price')) : [];
+});

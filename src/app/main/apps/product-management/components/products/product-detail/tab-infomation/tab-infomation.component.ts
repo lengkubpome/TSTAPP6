@@ -41,6 +41,9 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 		this.detailProductForm.get('price').enable();
 	}
 	onSaveChangePrice(): void {
+        const data = this.generateEditProduct();
+        this.saveEditProduct.emit(data);
+        
 		this.isChangingPrice = false;
 		this.detailProductForm.get('price').disable();
 	}
@@ -52,25 +55,19 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 
 	// Edit Product
 	onSaveEditProduct(): void {
-		const data: Product = {
-			id: this.productInfo.id,
-			active: this.productActive,
-			...this.detailProductForm.value
-		};
-
-		// let obj = {};
-		// Object.keys(data).map((key, index) => {
-		// 	return data[key] !== this.productInfo[key] ? { key: data[key], ...obj } : { ...obj };
-		// });
-
-		// console.log(obj);
-
+		const data = this.generateEditProduct();
 		this.saveEditProduct.emit(data);
 	}
+
 	onCancelEditProduct(): void {
 		this.setValueProductForm(this.productInfo);
 		this.cancelEditProduct.emit();
-	}
+    }
+    
+
+// -----------------------------------------------------------------------------------------------------
+// Function
+// -----------------------------------------------------------------------------------------------------
 
 	createProductForm(): FormGroup {
 		this.productActive = this.productInfo.active;
@@ -78,7 +75,7 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 		return this.formBuilder.group({
 			name: [ { value: this.productInfo.name, disabled: true } ],
 			code: [ { value: this.productInfo.code, disabled: true } ],
-			detail: [ { value: this.productInfo.description, disabled: true } ],
+			description: [ { value: this.productInfo.description, disabled: true } ],
 			price: [ { value: this.productInfo.price, disabled: true } ]
 		});
 	}
@@ -88,13 +85,13 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 			if (isEdit) {
 				this.detailProductForm.get('name').enable();
 				this.detailProductForm.get('code').enable();
-				this.detailProductForm.get('detail').enable();
+				this.detailProductForm.get('description').enable();
 				this.detailProductForm.get('price').enable();
 				this.isEditMode = true;
 			} else {
 				this.detailProductForm.get('name').disable();
 				this.detailProductForm.get('code').disable();
-				this.detailProductForm.get('detail').disable();
+				this.detailProductForm.get('description').disable();
 				this.detailProductForm.get('price').disable();
 				this.isEditMode = false;
 			}
@@ -104,8 +101,25 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	setValueProductForm(product: Product): void {
 		this.detailProductForm.get('name').setValue(product.name);
 		this.detailProductForm.get('code').setValue(product.code);
-		this.detailProductForm.get('detail').setValue(product.description);
+		this.detailProductForm.get('description').setValue(product.description);
 		this.detailProductForm.get('price').setValue(product.price);
 		this.productActive = product.active;
-	}
+    }
+    
+
+    // แปลงข้อมูลเฉพาะข้อมูลที่มีการเปลี่ยนแปลง 
+    // เพื่อลดปริมาณข้อมูลการบันทึกและทำให้ง่ายต่อการแยกข้อมูลภายหลัง
+	generateEditProduct(): Product {
+		const data: Product = {
+			active: this.productActive,
+			...this.detailProductForm.value
+		};
+		let newData = { id: this.productInfo.id };
+		Object.keys(data).map((key, index) => {
+			return data[key] !== this.productInfo[key]
+				? (newData = Object.assign({ [key]: data[key], ...newData }, newData))
+				: {};
+		});
+		return newData;
+    }
 }

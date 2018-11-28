@@ -14,7 +14,6 @@ export const EDIT_MODE = '[Product] Edit Mode';
 export const CANCEL_EDIT_MODE = '[Product] Cancel Edit Mode';
 
 export const UPDATE_PRODUCT = '[Product] Update Product';
-export const UPDATE_PRODUCT_SUCCESS = '[Product] Update Product Success';
 export const UPDATE_PRODUCT_FAIL = '[Product] Update Product Fail';
 
 export const CREATE_PRODUCT = '[Product] Create Product';
@@ -68,14 +67,10 @@ export class CancelEditMode implements Action {
 }
 
 export class UpdateProduct implements Action {
-    readonly type = UPDATE_PRODUCT;
-    constructor(public payload: { update: Product }) {}
+	readonly type = UPDATE_PRODUCT;
+	constructor(public payload: { product: Update<Product>, editor: string }) {}
 }
 
-export class UpdateProductSuccess implements Action {
-	readonly type = UPDATE_PRODUCT_SUCCESS;
-	constructor(public payload: { product: Update<Product> }) {}
-}
 export class UpdateProductFail implements Action {
 	readonly type = UPDATE_PRODUCT_FAIL;
 	constructor(public payload: { errorMessage: string }) {}
@@ -116,7 +111,6 @@ export type PRODUCT_ACTIONS =
 	| EditMode
 	| CancelEditMode
 	| UpdateProduct
-	| UpdateProductSuccess
 	| UpdateProductFail
 	| LoadProductHistory
 	| LoadProductHistoryFail

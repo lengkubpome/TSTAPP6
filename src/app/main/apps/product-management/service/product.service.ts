@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { Product, ProductHistory } from './../model/product.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -42,7 +43,19 @@ export class ProductService {
 		);
 	}
 
-	// updateProduct(product:Product): Observable<Product> {
-    //     return this.afs.collection(`business/${this.BUSINESS_ID}/products/${product.id}`).snapshotChanges()
-    // }
+	updateProduct(product: Update<Product>, editor: string): Promise<any> {
+		const batch = this.afs.firestore.batch();
+		const productRef = this.afs.firestore.doc(`business/${this.BUSINESS_ID}/products/${product.id}`);
+		const productHistoryRef = this.afs.firestore.doc(
+			`business/${this.BUSINESS_ID}/products/${product.id}/history/${Date.now()}`
+		);
+
+		const product_update = product;
+		delete product_update.id;
+		console.log(product_update);
+
+		batch.update(productRef, { ...product_update });
+		batch.set(productHistoryRef, { editor, product_update });
+		return batch.commit();
+	}
 }

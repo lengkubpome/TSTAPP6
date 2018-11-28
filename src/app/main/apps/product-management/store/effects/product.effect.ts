@@ -1,5 +1,6 @@
+import { Product } from './../../model/product.model';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap, map, mergeMap, catchError, withLatestFrom, tap } from 'rxjs/operators';
@@ -62,19 +63,21 @@ export class ProductEffect {
 		})
 	);
 
-	// @Effect()
-	// updateProduct$: Observable<Action> = this.actions$.pipe(
-	// 	ofType(fromActions.UPDATE_PRODUCT),
-	// 	map((action: fromActions.UpdateProduct) => {
-	// 		const data = action.payload.update;
-	// 		return new fromActions.UpdateProductSuccess({ product: { id: data.id, changes: data } });
-
-	// 		// return this.productService
-	// 		// 	.getProductHistory(action.payload.productId)
-	// 		// 	.pipe(
-	// 		// 		map((histories) => new fromActions.LoadProductHistorySuccess({ histories })),
-	// 		// 		catchError((error) => of(new fromActions.LoadProductHistoryFail({ errorMessage: error })))
-	// 		// 	);
-	// 	}),
-	// );
+	@Effect({})
+	updateProduct$: Observable<Action> = this.actions$.pipe(
+		ofType(fromActions.UPDATE_PRODUCT),
+		switchMap((action: fromActions.UpdateProduct) => {
+			const product = action.payload.product;
+            const editor = action.payload.editor;
+            
+			const ref = this.productService.updateProduct(product, editor);
+            return from(ref)
+            .pipe(
+				catchError((error) => of(new fromActions.UpdateProductFail({ errorMessage: error })))
+			);
+		}),
+		map(() => {
+			return new fromActions.CancelEditMode();
+		})
+	);
 }

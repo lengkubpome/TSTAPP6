@@ -36,7 +36,8 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 		}
 		case fromActions.LOAD_PRODUCT_SUCCESS: {
 			return productAdapter.addAll(action.payload.products, {
-				...state,
+                ...state,
+                editMode: false,
 				loading: false,
 				loaded: true,
 				error: null
@@ -44,7 +45,8 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 		}
 		case fromActions.LOAD_PRODUCT_FAIL: {
 			return Object.assign({
-				...state,
+                ...state,
+                editMode: false,
 				loading: false,
 				loaded: false,
 				error: action.payload.errorMessage
@@ -55,7 +57,8 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 			return Object.assign({
 				...state,
 				selectedProductId: action.payload.productId,
-				selectProductHistory: null,
+                selectProductHistory: null,
+                editMode: false,
 				loading: false,
 				loaded: false,
 				error: null
@@ -66,7 +69,8 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 			return Object.assign({
 				...state,
 				selectedProductId: null,
-				selectProductHistory: null,
+                selectProductHistory: null,
+                editMode: false,
 				loading: false,
 				loaded: false,
 				error: null
@@ -76,31 +80,38 @@ export function productReducer(state = initialState, action: fromActions.PRODUCT
 		case fromActions.EDIT_MODE: {
 			return Object.assign({
 				...state,
-				editMode: true
+                editMode: true,
+                loading: false,
+				loaded: false,
+				error: null
 			});
 		}
 		case fromActions.CANCEL_EDIT_MODE: {
 			return Object.assign({
 				...state,
-				editMode: false
+                editMode: false,
+                loading: false,
+				loaded: false,
+				error: null
 			});
 		}
 
 		case fromActions.UPDATE_PRODUCT: {
-			return Object.assign({
-				...state,
-				loading: true,
-				loaded: false
-			});
-		}
-		case fromActions.UPDATE_PRODUCT_SUCCESS: {
 			return productAdapter.updateOne(action.payload.product, {
 				...state,
-				loading: false,
-				loaded: true,
+				loading: true,
+                loaded: false,
 				error: null
 			});
 		}
+		// case fromActions.UPDATE_PRODUCT_SUCCESS: {
+		// 	return productAdapter.updateOne(action.payload.product, {
+		// 		...state,
+		// 		loading: false,
+		// 		loaded: true,
+		// 		error: null
+		// 	});
+		// }
 		case fromActions.UPDATE_PRODUCT_FAIL: {
 			return Object.assign({
 				...state,
