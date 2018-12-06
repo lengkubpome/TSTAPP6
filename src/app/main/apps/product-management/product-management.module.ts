@@ -1,3 +1,4 @@
+
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { Routes, RouterModule } from '@angular/router';
@@ -8,19 +9,28 @@ import { FuseWidgetModule } from '@fuse/components';
 
 import { reducers, FEATURE_NAME } from './product-management.state';
 import { ProductEffect } from './store';
+
+// Pipes
+import { MomentPipe } from '@app/shared/pipes/moment.pipe';
+import { RelativeTimePipe } from '@app/shared/pipes/relative-time.pipe';
+
 // service
 import { allProductService } from './service';
 
 // container
-import { InventoryComponent } from './containers/inventory/inventory.component';
+import { InventoryShellComponent } from './containers/inventory/inventory-shell/inventory-shell.component';
+import { ProductsShellComponent } from './containers/products/products-shell/products-shell.component';
+// component
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
-// component
-import { TabSettingComponent } from './components/products/product-detail/tab-setting/tab-setting.component';
 import { TabPriceHistoryComponent } from './components/products/product-detail/tab-price-history/tab-price-history.component';
 import { TabInfomationComponent } from './components/products/product-detail/tab-infomation/tab-infomation.component';
-import { ProductsShellComponent } from './containers/products/products-shell/products-shell.component';
+
 import { ProductNewComponent } from './components/products/product-new/product-new.component';
+import { TabInventoryComponent } from './components/products/product-detail/tab-inventory/tab-inventory.component';
+import { InventoryListComponent } from './components/inventory/inventory-list/inventory-list.component';
+
+
 
 const routes: Routes = [
 	{
@@ -39,7 +49,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'inventory',
-		component: InventoryComponent,
+		component: InventoryShellComponent,
 		resolve: {
 			// data: EcommerceProductsService
 		}
@@ -56,14 +66,23 @@ const routes: Routes = [
 		EffectsModule.forFeature([ ProductEffect ])
 	],
 	declarations: [
-		InventoryComponent,
+        //  Pipes
+         MomentPipe,
+         RelativeTimePipe,
+
+        //  Components
+		InventoryShellComponent,
 		ProductListComponent,
 		ProductDetailComponent,
-		TabSettingComponent,
 		TabPriceHistoryComponent,
 		TabInfomationComponent,
 		ProductsShellComponent,
-		ProductNewComponent
+		ProductNewComponent,
+        TabInventoryComponent,
+                InventoryShellComponent,
+                InventoryListComponent,
+       
+
 	],
 	providers: [ allProductService ],
 	entryComponents: [ ProductNewComponent ]

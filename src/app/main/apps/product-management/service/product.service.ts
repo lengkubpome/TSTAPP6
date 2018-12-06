@@ -18,7 +18,7 @@ export class ProductService {
 	}
 
 	getProducts(): Observable<Product[]> {
-		return this.afs.collection(`business/${this.BUSINESS_ID}/products`).snapshotChanges().pipe(
+		return this.afs.collection(`product_management/${this.BUSINESS_ID}/products`).snapshotChanges().pipe(
 			map((products) => {
 				return products.map((doc) => {
 					const data = doc.payload.doc.data();
@@ -33,7 +33,7 @@ export class ProductService {
 	}
 
 	getProductHistory(id: string): Observable<ProductHistory[]> {
-		return this.afs.collection(`business/${this.BUSINESS_ID}/products/${id}/history`).snapshotChanges().pipe(
+		return this.afs.collection(`product_management/${this.BUSINESS_ID}/products/${id}/history`).snapshotChanges().pipe(
 			map((histories) => {
 				return histories.map((doc) => {
 					const data = doc.payload.doc.data();
@@ -45,14 +45,12 @@ export class ProductService {
 
 	updateProduct(product: Update<Product>, editor: string): Promise<any> {
 		const batch = this.afs.firestore.batch();
-		const productRef = this.afs.firestore.doc(`business/${this.BUSINESS_ID}/products/${product.id}`);
+		const productRef = this.afs.firestore.doc(`product_management/${this.BUSINESS_ID}/products/${product.id}`);
 		const productHistoryRef = this.afs.firestore.doc(
-			`business/${this.BUSINESS_ID}/products/${product.id}/history/${Date.now()}`
-		);
-
+			`product_management/${this.BUSINESS_ID}/products/${product.id}/history/${Date.now()}`
+        );
 		const product_update = product;
-		delete product_update.id;
-		console.log(product_update);
+        delete product_update.id;        
 
 		batch.update(productRef, { ...product_update });
 		batch.set(productHistoryRef, { editor, product_update });

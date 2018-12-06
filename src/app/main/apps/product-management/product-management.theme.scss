@@ -1,8 +1,10 @@
-@mixin app-product-theme($theme) {
+@mixin product-management-theme($theme) {
 
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
+    $is-dark: map-get($theme, is-dark);
 
+    // Products
     app-product-list, app-product-detail {
         .header {
 
@@ -23,6 +25,19 @@
             }
         }
     }
-}
 
-// }
+    // Inventory
+    #dashboard-project {
+
+        > .center {
+
+            > .content {
+                @if ($is-dark) {
+                    background: map-get($background, background);
+                } @else {
+                    background: map-get($background, app-bar);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+<div id="dashboard-project" class="page-layout simple">
+
+        <!-- HEADER -->
+        <div class="header accent p-24" fxLayout="column" fxLayoutAlign="center start">
+    
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="secondary-text s-18">home</mat-icon>
+                <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+                <span class="secondary-text">Documentation</span>
+            </div>
+    
+            <div fxLayout="row" fxLayoutAlign="space-between start">
+    
+                <span class="mat-display-1 my-0 my-sm-24 welcome-message" [@animate]="{value:'*',params:{x:'50px'}}">
+                    Inventory
+                </span>
+            </div>
+    
+        </div>
+        <!-- / HEADER -->
+    
+        <!-- CONTENT -->
+        <div class="content">
+            <div fxLayout="row wrap" fxLayout="column">
+                <!-- Widget 5 -->
+                <div class="pb-24 font-size-18 font-weight-300">
+                    Inventory List
+                </div>
+    
+                <div class="fuse-card auto-width">
+    
+                    <div class="position-relative px-24 py-16 " fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="column" fxLayoutAlign="start start">
+                            <span class="h2">Inventory ID 1</span>
+                            <span class="secondary-text">Description</span>
+                        </div>
+                        <button mat-icon-button fuseWidgetToggle aria-label="more">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+    
+                    <!-- <table class="simple">
+    
+                            <thead>
+                                <tr>
+                                    <th *ngFor="let column of widgets.widget10.table.columns">
+                                        {{column.title}}
+                                    </th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr *ngFor="let row of widgets.widget10.table.rows">
+                                    <td *ngFor="let cell of row">
+                                        <span class="p-4" [ngClass]="cell.classes">
+                                            {{cell.value}}
+                                        </span>
+                                        <mat-icon *ngIf="cell.icon" class="s-16">{{cell.icon}}
+                                        </mat-icon>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+    
+                </div>
+                <!-- / Widget 5 -->
+            </div>
+        </div>
+    
+        <!-- / CONTENT -->
+    
+    </div>

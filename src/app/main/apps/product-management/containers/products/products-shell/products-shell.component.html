@@ -6,7 +6,7 @@
 </app-product-list>
 <app-product-detail
     *ngIf="isSelectedProduct" 
-    [productInfo]="product$ | async"
+    [productInfo$]="product$"
     [productHistory]=""
     [productPriceHistory]="productPriceHistory$ | async"
     [isEditMode$]="isEditMode$"

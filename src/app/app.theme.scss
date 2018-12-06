@@ -80,7 +80,7 @@ $typography: mat-typography-config(
 // Import app and page component themes here to enable theming for them
 @import "app/layout/components/chat-panel/chat-panel.theme";
 @import "app/layout/components/toolbar/toolbar.theme";
-@import "app/main/apps/product-management/containers/products/products.theme";
+@import "app/main/apps/product-management/product-management.theme";
 
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -89,7 +89,7 @@ $typography: mat-typography-config(
     @include chat-panel-theme($theme);
     @include toolbar-theme($theme);
 
-    @include app-product-theme($theme);
+    @include product-management-theme($theme);
     
 }
 

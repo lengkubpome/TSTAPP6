@@ -1,0 +1,34 @@
+<div class="section pb-48">
+
+        <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
+            <div class="h2 secondary-text">Order Status</div>
+        </div>
+
+        <div class="customer mb-32">
+        <table class="simple">
+            <thead>
+                <tr>
+                    <th>Inventory</th>
+                    <th>Updated On</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let status of order.status">
+                    <td>
+                        <span class="status h6 p-4" [ngClass]="status.color">
+                            {{status.name}}
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            {{status.date | date}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+    </div>

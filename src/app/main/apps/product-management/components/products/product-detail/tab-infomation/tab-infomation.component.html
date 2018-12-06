@@ -1,84 +1,98 @@
-<form [formGroup]="detailProductForm" fusePerfectScrollbar
-fxLayout="column" fxLayoutAlign="start">
-<div fxLayout="row" fxLayoutAlign="end start" class="mat-title">
-    <span class="h3"> Product is inactive.</span>
-    <button mat-stroked-button [matMenuTriggerFor]="menu" type="button" [color]="
-            productActive 
+<form [formGroup]="detailProductForm" fusePerfectScrollbar fxLayout="column" fxLayoutAlign="start">
+
+    <!-- section product detail -->
+    <div class="section pb-48">
+
+        <div fxLayout="row" fxLayoutAlign="space-between start" class="mat-title">
+            <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                <!-- <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
+        <div class="h2 secondary-text">Customer</div> -->
+
+            </div>
+            <div class="pb-16" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <span>Date Time : {{this.productInfo.status.date_change.toDate() |relativeTimePipe }}</span>
+                <button mat-stroked-button [matMenuTriggerFor]="menu" type="button" [color]="
+                productActive 
                 ? 'accent'
                 : 'warn'
         ">
-        {{ productActive? 'Active': 'Inactive' }}
-        <!-- &nbsp;<mat-icon>arrow_drop_down</mat-icon> -->
-    </button>
-    <mat-menu #menu="matMenu">
-        <button *ngIf="isEditMode" mat-menu-item (click)="productActive = true">
-            <mat-icon>{{
-                productActive
-                ? 'check'
-                : ''
-                }}</mat-icon>
-            Active
-        </button>
-        <button *ngIf="isEditMode" mat-menu-item (click)="productActive = false">
-            <mat-icon>{{
-               !productActive
-                ? 'check'
-                : ''
-                }}</mat-icon>
-            Inactive
-        </button>
-    </mat-menu>
-</div>
-
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
-    <mat-form-field appearance="outline" class="w-100-p mr-8">
-        <mat-label>Product Name</mat-label>
-        <input matInput type="text" placeholder="Please enter the information " formControlName="name" />
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="w-100-p">
-        <mat-label>Product Code</mat-label>
-        <input matInput type="text" placeholder="Please enter the information " formControlName="code" />
-    </mat-form-field>
-</div>
-
-<mat-form-field appearance="outline" class="w-100-p">
-    <mat-label>Product Description</mat-label>
-    <textarea matInput placeholder="Product Description" rows="3" formControlName="description"></textarea>
-</mat-form-field>
-
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-    <mat-form-field appearance="outline" fxFlex class="mt-10">
-        <mat-label>Price</mat-label>
-        <input matInput type="number" placeholder="Please enter the information " formControlName="price" />
-    </mat-form-field>
-    <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isEditMode">
-        <div *ngIf="isChangingPrice" >
-            <button mat-icon-button color="primary" (click)="onSaveChangePrice()">
-                <mat-icon>done</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="onCancelChangePrice()">
-                <mat-icon>close</mat-icon>
-            </button>
+                    {{ productActive ? 'Active': 'Inactive' }}
+                </button>
+            </div>
         </div>
 
-        <button mat-flat-button color="accent" *ngIf="isChangingPrice === false"
-            [disabled]="
+        <mat-menu #menu="matMenu">
+            <button *ngIf="isEditMode" mat-menu-item (click)="onChangeStatus(true)">
+                <mat-icon>{{
+                    productActive
+                    ? 'check'
+                    : ''
+                    }}</mat-icon>
+                Active
+            </button>
+            <button *ngIf="isEditMode" mat-menu-item (click)="onChangeStatus(false)">
+                <mat-icon>{{
+                    !productActive
+                    ? 'check'
+                    : ''
+                    }}</mat-icon>
+                Inactive
+            </button>
+        </mat-menu>
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+            <mat-form-field appearance="outline" class="w-100-p mr-8">
+                <mat-label>Product Name</mat-label>
+                <input matInput type="text" placeholder="Please enter the information " formControlName="name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100-p">
+                <mat-label>Product Code</mat-label>
+                <input matInput type="text" placeholder="Please enter the information " formControlName="code" />
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="w-100-p">
+            <mat-label>Product Description</mat-label>
+            <textarea matInput placeholder="Product Description" rows="3" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+            <mat-form-field appearance="outline" fxFlex class="mt-10">
+                <mat-label>Price</mat-label>
+                <input matInput type="number" placeholder="Please enter the information " formControlName="price" />
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isEditMode">
+                <div *ngIf="isChangingPrice">
+                    <button mat-icon-button color="primary" (click)="onSaveChangePrice()">
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onCancelChangePrice()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+
+                <button mat-flat-button color="accent" *ngIf="isChangingPrice === false" [disabled]="
                 !productActive
                     ? true
                     : false
             "
-            (click)="onChangePrice()">
-            Change
+                    (click)="onChangePrice()">
+                    Change
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <!--end section product detail -->
+
+
+    <!-- Button Edit -->
+    <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" *ngIf="isEditMode">
+        <button mat-flat-button color="" (click)="onCancelEditProduct()">
+            Cancel
+        </button>
+        <button mat-flat-button color="primary" (click)="onSaveEditProduct()">
+            Save
         </button>
     </div>
-</div>
-<!-- Button Edit -->
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="10px" *ngIf="isEditMode">
-    <button mat-flat-button color="" (click)="onCancelEditProduct()">
-        Cancel
-    </button>
-    <button mat-flat-button color="primary" (click)="onSaveEditProduct()">
-        Save
-    </button>
-</div>
 </form>

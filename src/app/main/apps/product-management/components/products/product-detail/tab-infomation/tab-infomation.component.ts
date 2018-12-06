@@ -16,20 +16,26 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	unsubscribe$ = new Subject<void>();
 	detailProductForm: FormGroup;
 	productActive: boolean;
+	productInfo: Product;
 	isChangingPrice = false;
 	isEditMode = false;
 
 	@Input() isEditMode$: Observable<boolean>;
-	@Input() productInfo: Product;
+	@Input() productInfo$: Observable<Product>;
 	@Output() saveEditProduct = new EventEmitter<any>();
 	@Output() cancelEditProduct = new EventEmitter<void>();
 
 	constructor(private formBuilder: FormBuilder) {}
 
 	ngOnInit(): void {
+		this.productInfo$.pipe(takeUntil(this.unsubscribe$)).subscribe((product) => {
+			this.productInfo = product;
+		});
+
 		this.detailProductForm = this.createProductForm();
 		this.editedProductForm();
 	}
+
 	ngOnDestroy(): void {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();
@@ -40,13 +46,15 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 		this.isChangingPrice = true;
 		this.detailProductForm.get('price').enable();
 	}
+
 	onSaveChangePrice(): void {
-        const data = this.generateEditProduct();
-        this.saveEditProduct.emit(data);
-        
+		const data = this.generateEditProduct();
+		this.saveEditProduct.emit(data);
+
 		this.isChangingPrice = false;
 		this.detailProductForm.get('price').disable();
 	}
+
 	onCancelChangePrice(): void {
 		this.isChangingPrice = false;
 		this.setValueProductForm(this.productInfo);
@@ -56,21 +64,28 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	// Edit Product
 	onSaveEditProduct(): void {
 		const data = this.generateEditProduct();
+
+		console.log('ffffffffff');
+		console.log(data);
+
 		this.saveEditProduct.emit(data);
 	}
 
 	onCancelEditProduct(): void {
 		this.setValueProductForm(this.productInfo);
 		this.cancelEditProduct.emit();
-    }
-    
+	}
 
-// -----------------------------------------------------------------------------------------------------
-// Function
-// -----------------------------------------------------------------------------------------------------
+	onChangeStatus(value: boolean): void {
+		this.productActive = value;
+	}
+
+	// -----------------------------------------------------------------------------------------------------
+	// Function
+	// -----------------------------------------------------------------------------------------------------
 
 	createProductForm(): FormGroup {
-		this.productActive = this.productInfo.active;
+		this.productActive = this.productInfo.status.active;
 
 		return this.formBuilder.group({
 			name: [ { value: this.productInfo.name, disabled: true } ],
@@ -103,23 +118,30 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 		this.detailProductForm.get('code').setValue(product.code);
 		this.detailProductForm.get('description').setValue(product.description);
 		this.detailProductForm.get('price').setValue(product.price);
-		this.productActive = product.active;
-    }
-    
+		this.productActive = product.status.active;
+	}
 
-    // แปลงข้อมูลเฉพาะข้อมูลที่มีการเปลี่ยนแปลง 
-    // เพื่อลดปริมาณข้อมูลการบันทึกและทำให้ง่ายต่อการแยกข้อมูลภายหลัง
+	// แปลงข้อมูลเฉพาะข้อมูลที่มีการเปลี่ยนแปลง
+	// เพื่อลดปริมาณข้อมูลการบันทึกและทำให้ง่ายต่อการแยกข้อมูลภายหลัง
 	generateEditProduct(): Product {
-		const data: Product = {
-			active: this.productActive,
-			...this.detailProductForm.value
-		};
+		let data: Product;
+
+		this.productActive !== this.productInfo.status.active
+			? (data = {
+					status: { active: this.productActive, date_change: new Date(Date.now()) },
+					...this.detailProductForm.value
+				})
+			: (data = {
+					...this.detailProductForm.value
+				});
+
 		let newData = { id: this.productInfo.id };
 		Object.keys(data).map((key, index) => {
 			return data[key] !== this.productInfo[key]
 				? (newData = Object.assign({ [key]: data[key], ...newData }, newData))
 				: {};
 		});
+
 		return newData;
-    }
+	}
 }

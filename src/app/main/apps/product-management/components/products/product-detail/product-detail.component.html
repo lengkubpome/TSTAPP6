@@ -68,12 +68,17 @@
                         <mat-tab label="Basic Info">
                             <tab-infomation class="tab-content p-24" 
                                 [isEditMode$]="isEditMode$" 
-                                [productInfo]="productInfo"
+                                [productInfo$]="productInfo$"
                                 (saveEditProduct)="onSaveEditProduct($event)"
                                 (cancelEditProduct)="onCancelEditProduct()"></tab-infomation>
                         </mat-tab>
                         <!-- End Basic Tab -->
-
+                        
+                        <!-- Setting Inventory -->
+                        <mat-tab label="Inventory" [disabled]="isEditMode">
+                            <tab-inventory class="tab-content p-24"></tab-inventory>
+                        </mat-tab>
+                        <!-- Setting Inventory -->
 
                         <!-- Price History Tab -->
                         <mat-tab label="Price History" [disabled]="isEditMode">
@@ -82,11 +87,7 @@
                         </mat-tab>
                         <!-- End Price History Tab -->
 
-                        <!-- Setting Inventory -->
-                        <mat-tab label="Setting" [disabled]="isEditMode">
-                            <tab-setting class="tab-content p-24"></tab-setting>
-                        </mat-tab>
-                        <!-- Setting Inventory -->
+                       
                     </mat-tab-group>
                 </div>
             </div>

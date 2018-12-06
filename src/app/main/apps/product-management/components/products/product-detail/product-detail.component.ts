@@ -4,6 +4,7 @@ import { Subject, Observable } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material';
 
 import { Product, ProductHistory } from '../../../model/product.model';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-product-detail',
@@ -16,11 +17,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	productStatus: string;
 	selectedTab = 0;
 	isEditMode = false;
+	productInfo: Product;
 
-	@Input() productInfo: Product;
+	@Input() productInfo$: Observable<Product>;
+	@Input() isEditMode$: Observable<boolean>;
 	@Input() productHistory: ProductHistory[] = [];
 	@Input() productPriceHistory: ProductHistory[] = [];
-	@Input() isEditMode$: Observable<boolean>;
+
 	@Output() editMode = new EventEmitter<void>();
 	@Output() saveEditMode = new EventEmitter<Product>();
 	@Output() cancelEditMode = new EventEmitter<void>();
@@ -34,7 +37,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.isEditMode$.subscribe((mode) => (this.isEditMode = mode));
+		this.productInfo$.pipe(takeUntil(this.unsubscribe$)).subscribe((product) => (this.productInfo = product));
+		this.isEditMode$.pipe(takeUntil(this.unsubscribe$)).subscribe((mode) => (this.isEditMode = mode));
 	}
 
 	ngOnDestroy(): void {
@@ -56,7 +60,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	}
 
 	onSaveEditProduct(data: Product): void {
-        // this.productInfo = data;
+		// this.productInfo = data;
 		this.saveEditMode.emit(data);
 	}
 	onCancelEditProduct(): void {
