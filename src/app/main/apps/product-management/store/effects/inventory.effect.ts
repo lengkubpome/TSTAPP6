@@ -1,4 +1,6 @@
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { Update } from '@ngrx/entity';
+import { Inventory } from './../../model/inventory.model';
+import { mergeMap, map, catchError, tap, switchMap, concatMap } from 'rxjs/operators';
 import { InventoryService } from './../../service/inventory.service';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -18,10 +20,27 @@ export class InventoryEffect {
 	loadInventory$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_INVENTORY),
 		mergeMap((action: fromActions.LoadInventory) => {
-			return this.inventoryService.getInventory().pipe(
-				map((inventory) => new fromActions.LoadInventorySuccess({ inventories : inventory }))
-				// catchError((error) => of(new fromActions.LoadProductFail({ errorMessage: error })))
-			);
+			return this.inventoryService
+				.getInventory()
+				.pipe(map((inventories) => new fromActions.LoadInventorySuccess({ inventories: inventories })));
+		})
+	);
+
+	@Effect()
+	loadInventoryProducts$: Observable<Action> = this.actions$.pipe(
+		ofType(fromActions.LOAD_INVENTORY_SUCCESS),
+		map((action: fromActions.LoadInventorySuccess) => action.payload),
+		mergeMap((action) => {
+			return action.inventories.map((inventory) => {
+				return this.inventoryService.getInventoryProducts(inventory.id).pipe(
+					map((stocks) => {
+						return Object.assign(inventory, { product_stocks: stocks }) as Inventory;
+					})
+				);
+			});
+		}),
+		mergeMap((res) => {
+			return res.pipe(map((inventory) => new fromActions.UpdateInventorySuccess({ inventory })));
 		})
 	);
 }

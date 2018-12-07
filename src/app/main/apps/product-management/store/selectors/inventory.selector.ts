@@ -10,3 +10,6 @@ export const getInventoryState = createSelector(
 
 
 const { selectIds, selectEntities, selectAll, selectTotal } = inventoryAdapter.getSelectors();
+
+
+export const selectAllInventory = createSelector(getInventoryState, selectAll);

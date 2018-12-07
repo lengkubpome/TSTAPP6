@@ -3,13 +3,13 @@ export interface Inventory {
 	name?: string;
 	description?: string;
 	permission?: any;
-	product_stocks?: [
-		{
-			product_id: string;
-			balance_stock: {
-				volume: number;
-				amount: number;
-			};
-		}
-	];
+	product_stocks?: InventoryProduct[];
+}
+
+export interface InventoryProduct {
+	product_id: string;
+	balance_stock?: {
+		volume?: number;
+		amount?: number;
+	};
 }

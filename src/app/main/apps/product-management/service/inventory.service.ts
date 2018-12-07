@@ -1,5 +1,6 @@
-import { map, catchError } from 'rxjs/operators';
-import { Inventory } from './../model/inventory.model';
+import { FirestoreService } from '@app/shared/services/firestore.service';
+import { map, catchError, switchMap, combineLatest, mergeMap, concatMap, mergeAll } from 'rxjs/operators';
+import { Inventory, InventoryProduct } from './../model/inventory.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -12,19 +13,19 @@ import * as fromProductStore from '../store';
 export class InventoryService {
 	private BUSINESS_ID: string;
 
-	constructor(private afs: AngularFirestore, private store: Store<fromProductManagement.State>) {
+	constructor(
+		private db: FirestoreService,
+		private afs: AngularFirestore,
+		private store: Store<fromProductManagement.State>
+	) {
 		this.BUSINESS_ID = '0406069000354';
 	}
 
 	getInventory(): Observable<Inventory[]> {
-		return this.afs.collection(`product_management/${this.BUSINESS_ID}/inventory`).snapshotChanges().pipe(
-			map((inventory) => {
-				return inventory.map((doc) => {
-					const data = doc.payload.doc.data();
-					return { id: doc.payload.doc.id, ...data } as Inventory;
-				});
-			}),
-			catchError((error: any) => Observable.throw(error.json()))
-		);
+        return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/inventory/`)
+	}
+
+	getInventoryProducts(id: string): Observable<InventoryProduct[]> {
+		return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/inventory/${id}/product_stocks`);
 	}
 }
