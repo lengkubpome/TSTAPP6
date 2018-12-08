@@ -13,3 +13,5 @@ const { selectIds, selectEntities, selectAll, selectTotal } = inventoryAdapter.g
 
 
 export const selectAllInventory = createSelector(getInventoryState, selectAll);
+
+

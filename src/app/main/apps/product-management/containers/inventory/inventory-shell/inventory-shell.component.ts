@@ -18,6 +18,7 @@ export class InventoryShellComponent implements OnInit {
 
 	ngOnInit(): void {
         this.inventories$ = this.store.pipe(select(fromApp.selectAllInventory));
+		// this.store.dispatch(new fromApp.LoadProduct());
 		this.store.dispatch(new fromApp.LoadInventory());
 	}
 }

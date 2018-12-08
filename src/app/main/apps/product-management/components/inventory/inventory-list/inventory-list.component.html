@@ -31,7 +31,7 @@
 
             <div class="fuse-card auto-width" *ngFor="let inventory of inventories">
 
-                <div class="position-relative px-24 py-16 " fxLayout="row" fxLayoutAlign="space-between center" >
+                <div class="position-relative px-24 py-16 " fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
                         <span class="h2">{{inventory.name}}</span>
                         <span class="secondary-text">{{inventory.description}}</span>
@@ -42,27 +42,35 @@
                 </div>
 
                 <!-- <table class="simple">
-    
-                            <thead>
-                                <tr>
-                                    <th *ngFor="let column of widgets.widget10.table.columns">
-                                        {{column.title}}
-                                    </th>
-                                </tr>
-                            </thead>
-    
-                            <tbody>
-                                <tr *ngFor="let row of widgets.widget10.table.rows">
-                                    <td *ngFor="let cell of row">
-                                        <span class="p-4" [ngClass]="cell.classes">
-                                            {{cell.value}}
-                                        </span>
-                                        <mat-icon *ngIf="cell.icon" class="s-16">{{cell.icon}}
+
+                    <thead>
+                        <tr>
+                            <th *ngFor="let product of inventory.product_stocks">
+                            <th>
+                                header1
+                            </th>
+                            <th>
+                                header2
+                            </th>
+                            <th>
+                                header3
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let row of inventory.product_stocks">
+                            <td *ngFor="let cell of row">
+                                <span class="p-4" [ngClass]="cell.classes">
+                                <span class="p-4">
+                                    xxx
+                                </span>
+                                <mat-icon *ngIf="cell.icon" class="s-16">{{cell.icon}}
                                         </mat-icon>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
 
             </div>
             <!-- / Widget 5 -->

@@ -15,14 +15,12 @@ export class InventoryService {
 
 	constructor(
 		private db: FirestoreService,
-		private afs: AngularFirestore,
-		private store: Store<fromProductManagement.State>
 	) {
 		this.BUSINESS_ID = '0406069000354';
 	}
 
 	getInventory(): Observable<Inventory[]> {
-        return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/inventory/`)
+		return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/inventory/`);
 	}
 
 	getInventoryProducts(id: string): Observable<InventoryProduct[]> {

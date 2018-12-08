@@ -7,7 +7,8 @@ export interface Inventory {
 }
 
 export interface InventoryProduct {
-	product_id: string;
+	id: string;
+	name?: string;
 	balance_stock?: {
 		volume?: number;
 		amount?: number;
