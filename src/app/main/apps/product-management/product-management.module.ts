@@ -28,6 +28,7 @@ import { TabInfomationComponent } from './components/products/product-detail/tab
 import { ProductNewComponent } from './components/products/product-new/product-new.component';
 import { TabInventoryComponent } from './components/products/product-detail/tab-inventory/tab-inventory.component';
 import { InventoryListComponent } from './components/inventory/inventory-list/inventory-list.component';
+import { InventoryNewComponent } from './components/inventory/inventory-new/inventory-new.component';
 
 const routes: Routes = [
 	{
@@ -77,9 +78,10 @@ const routes: Routes = [
 		ProductNewComponent,
 		TabInventoryComponent,
 		InventoryShellComponent,
-		InventoryListComponent
+		InventoryListComponent,
+		InventoryNewComponent
 	],
 	providers: [ allProductService ],
-	entryComponents: [ ProductNewComponent ]
+	entryComponents: [ ProductNewComponent, InventoryNewComponent ]
 })
 export class ProductManagementModule {}

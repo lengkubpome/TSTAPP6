@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatButtonModule, MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
@@ -35,10 +34,6 @@ import { CoreModule } from './core';
 
         // Material moment date module
         MatMomentDateModule,
-
-        // Material
-        MatButtonModule,
-        MatIconModule,
 
         // Fuse modules
         FuseModule.forRoot(fuseConfig),

@@ -1,3 +1,4 @@
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,91 +10,97 @@ import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FusePipesModule } from '@fuse/pipes/pipes.module';
 
 import {
-    MatButtonModule,
-    MatChipsModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSortModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatTabsModule,
-    MatDatepickerModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatDialogModule
+	MatButtonModule,
+	MatChipsModule,
+	MatExpansionModule,
+	MatFormFieldModule,
+	MatIconModule,
+	MatInputModule,
+	MatPaginatorModule,
+	MatRippleModule,
+	MatSelectModule,
+	MatSortModule,
+	MatSnackBarModule,
+	MatTableModule,
+	MatTabsModule,
+	MatDatepickerModule,
+	MatMenuModule,
+	MatSlideToggleModule,
+	MatDialogModule,
+	MatToolbarModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
 
-        FlexLayoutModule,
+		FlexLayoutModule,
 
-        FuseDirectivesModule,
-        FusePipesModule,
+		FuseDirectivesModule,
+		FusePipesModule,
 
-        // Angular Material
-        MatButtonModule,
-        MatChipsModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSortModule,
-        MatSnackBarModule,
-        MatTableModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatMenuModule,
-        MatSlideToggleModule,
-        MatDialogModule,
+		// Angular Material
+		MatButtonModule,
+		MatChipsModule,
+		MatExpansionModule,
+		MatFormFieldModule,
+		MatIconModule,
+		MatInputModule,
+		MatPaginatorModule,
+		MatRippleModule,
+		MatSelectModule,
+		MatSortModule,
+		MatSnackBarModule,
+		MatTableModule,
+		MatTabsModule,
+		MatFormFieldModule,
+		MatDatepickerModule,
+		MatMenuModule,
+		MatSlideToggleModule,
+		MatDialogModule,
+		MatToolbarModule,
 
-        NgxChartsModule
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
+		MatMomentDateModule,
 
-        FlexLayoutModule,
+		NgxChartsModule
+	],
+	exports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
 
-        FuseDirectivesModule,
-        FusePipesModule,
+		FlexLayoutModule,
 
-         // Angular Material
-         MatButtonModule,
-         MatChipsModule,
-         MatExpansionModule,
-         MatFormFieldModule,
-         MatIconModule,
-         MatInputModule,
-         MatPaginatorModule,
-         MatRippleModule,
-         MatSelectModule,
-         MatSortModule,
-         MatSnackBarModule,
-         MatTableModule,
-         MatTabsModule,
-         MatFormFieldModule,
-         MatDatepickerModule,
-         MatMenuModule,
-         MatSlideToggleModule,
-         MatDialogModule,
+		FuseDirectivesModule,
+		FusePipesModule,
 
-         NgxChartsModule
-    ]
+		// Angular Material
+		MatButtonModule,
+		MatChipsModule,
+		MatExpansionModule,
+		MatFormFieldModule,
+		MatIconModule,
+		MatInputModule,
+		MatPaginatorModule,
+		MatRippleModule,
+		MatSelectModule,
+		MatSortModule,
+		MatSnackBarModule,
+		MatTableModule,
+		MatTabsModule,
+		MatFormFieldModule,
+		MatDatepickerModule,
+		MatMenuModule,
+		MatSlideToggleModule,
+		MatDialogModule,
+		MatToolbarModule,
+
+		MatMomentDateModule,
+
+		NgxChartsModule
+	]
 })
 export class FuseSharedModule {}
