@@ -5,8 +5,10 @@ import { Action } from '@ngrx/store';
 export const LOAD_INVENTORY = '[Inventory] Load Inventory';
 export const LOAD_INVENTORY_SUCCESS = '[Inventory] Load Inventory Success';
 
-export const UPDATE_INVENTORY = '[Inventory] Update Inventory Products';
-export const UPDATE_INVENTORY_SUCCESS = '[Inventory] Update Inventory Products Success';
+export const LOAD_INVENTORY_PRODUCTS_SUCCESS = '[Inventory] Load Inventory Products Success';
+
+export const CREATE_INVENTORY = '[Inventory] Create Inventory';
+export const CREATE_INVENTORY_SUCCESS = '[Inventory] Create Inventory Success';
 
 // Action
 export class LoadInventory implements Action {
@@ -18,19 +20,24 @@ export class LoadInventorySuccess implements Action {
 	constructor(public payload: { inventories: Inventory[] }) {}
 }
 
-
-export class UpdateInventorySuccess implements Action {
-	readonly type = UPDATE_INVENTORY_SUCCESS;
+export class LoadInventoryProductsSuccess implements Action {
+	readonly type = LOAD_INVENTORY_PRODUCTS_SUCCESS;
 	constructor(public payload: { inventory: Inventory }) {}
 }
 
-export class UpdateInventory implements Action {
-	readonly type = UPDATE_INVENTORY;
-	constructor() {}
+export class CreateInventory implements Action {
+	readonly type = CREATE_INVENTORY;
+	constructor(public payload: { inventory: Inventory }) {}
+}
+
+export class CreateInventorySuccess implements Action {
+	readonly type = CREATE_INVENTORY_SUCCESS;
+	// constructor(public payload: { inventory: Inventory }) {}
 }
 
 export type INVENTORY_ACTIONS =
 	| LoadInventory
 	| LoadInventorySuccess
-	| UpdateInventory
-	| UpdateInventorySuccess;
+	| LoadInventoryProductsSuccess
+	| CreateInventory
+	// | CreateInventorySuccess;

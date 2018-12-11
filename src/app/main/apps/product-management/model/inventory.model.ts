@@ -4,6 +4,9 @@ export interface Inventory {
 	description?: string;
 	permission?: any;
 	product_stocks?: InventoryProduct[];
+	// creator?: string;
+	createdAt?: Date;
+	updateAt?: Date;
 }
 
 export interface InventoryProduct {

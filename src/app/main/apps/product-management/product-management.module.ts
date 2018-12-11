@@ -28,7 +28,8 @@ import { TabInfomationComponent } from './components/products/product-detail/tab
 import { ProductNewComponent } from './components/products/product-new/product-new.component';
 import { TabInventoryComponent } from './components/products/product-detail/tab-inventory/tab-inventory.component';
 import { InventoryListComponent } from './components/inventory/inventory-list/inventory-list.component';
-import { InventoryNewComponent } from './components/inventory/inventory-new/inventory-new.component';
+import { FormInventoryNewComponent } from './components/inventory/form-inventory-new/form-inventory-new.component';
+import { InventoryDetailComponent } from './components/inventory/inventory-detail/inventory-detail.component';
 
 const routes: Routes = [
 	{
@@ -40,7 +41,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'products/:id',
-		component: ProductDetailComponent,
+		component: InventoryDetailComponent,
 		resolve: {
 			// data: EcommerceProductService
 		}
@@ -48,6 +49,13 @@ const routes: Routes = [
 	{
 		path: 'inventory',
 		component: InventoryShellComponent,
+		resolve: {
+			// data: EcommerceProductsService
+		}
+	},
+	{
+		path: 'inventory/:id',
+		component: InventoryDetailComponent,
 		resolve: {
 			// data: EcommerceProductsService
 		}
@@ -79,9 +87,10 @@ const routes: Routes = [
 		TabInventoryComponent,
 		InventoryShellComponent,
 		InventoryListComponent,
-		InventoryNewComponent
+		FormInventoryNewComponent,
+		InventoryDetailComponent
 	],
 	providers: [ allProductService ],
-	entryComponents: [ ProductNewComponent, InventoryNewComponent ]
+	entryComponents: [ ProductNewComponent, FormInventoryNewComponent ]
 })
 export class ProductManagementModule {}

@@ -68,16 +68,17 @@ export class ProductEffect {
 		ofType(fromActions.UPDATE_PRODUCT),
 		switchMap((action: fromActions.UpdateProduct) => {
 			const product = action.payload.product;
-            const editor = action.payload.editor;
-            
-			const ref = this.productService.updateProduct(product, editor);
-            return from(ref)
-            .pipe(
+			const editor = action.payload.editor;
+
+			return from(this.productService.updateProduct(product, editor)).pipe(
+				mergeMap(() => {
+					return [ { type: fromActions.CANCEL_EDIT_MODE } ];
+				}),
 				catchError((error) => of(new fromActions.UpdateProductFail({ errorMessage: error })))
 			);
-		}),
-		map(() => {
-			return new fromActions.CancelEditMode();
 		})
+		// map(() => {
+		// 	return new fromActions.CancelEditMode();
+		// })
 	);
 }

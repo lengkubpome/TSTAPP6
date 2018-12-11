@@ -1,0 +1,42 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">Create Inventory</span>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+
+    <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" name="name" formControlName="name">
+                    <mat-icon matSuffix class="secondary-text" style="color:green" *ngIf="inventoryForm.get('name').valid">done</mat-icon>
+                    <mat-error *ngIf="inventoryForm.get('name').invalid">Please input more 6 charactor.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Description</mat-label>
+                    <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
+                    <input matInput type="text" name="description" formControlName="description">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button class="mr-8" type="button" (click)="matDialogRef.close()" aria-label="Close dialog">
+                Cancel
+            </button>
+
+            <button mat-button type="submit" class="mr-8" color="accent" [disabled]="inventoryForm.invalid">
+                Create
+            </button>
+
+        </div>
+    </form>
+</div>

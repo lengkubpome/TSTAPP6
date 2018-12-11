@@ -9,6 +9,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FusePipesModule } from '@fuse/pipes/pipes.module';
 
+// FontAwesome
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas, faArchive, faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+
+library.add(fas, faArchive, faClipboardList, faTwitter);
+
+// Material
 import {
 	MatButtonModule,
 	MatChipsModule,
@@ -41,6 +51,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 		FuseDirectivesModule,
 		FusePipesModule,
+
+		// FontAwesome
+		FontAwesomeModule,
 
 		// Angular Material
 		MatButtonModule,
@@ -76,6 +89,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 		FuseDirectivesModule,
 		FusePipesModule,
+
+		// FontAwesome
+		FontAwesomeModule,
 
 		// Angular Material
 		MatButtonModule,

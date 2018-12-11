@@ -5,27 +5,26 @@ import {
 	tap,
 	concatMap,
 	withLatestFrom,
-	debounceTime
+	debounceTime,
+	switchMap,
+	catchError,
+	takeUntil,
+	exhaustMap
 } from 'rxjs/operators';
 import { InventoryService } from './../../service/inventory.service';
 import { Action, Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import * as fromActions from '../actions';
 import * as fromProductManagement from '../../product-management.state';
 import { Injectable } from '@angular/core';
+import { delay } from 'q';
 
 const BUSINESS_ID = '0406069000354';
 
 @Injectable()
 export class InventoryEffect {
-	constructor(
-		private actions$: Actions,
-		private inventoryService: InventoryService,
-		private store: Store<fromProductManagement.State>
-	) {}
-
 	@Effect()
 	loadInventory$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_INVENTORY),
@@ -40,7 +39,10 @@ export class InventoryEffect {
 		mergeMap(() => {
 			return this.inventoryService
 				.getInventory()
-				.pipe(map((inventories) => new fromActions.LoadInventorySuccess({ inventories })));
+				.pipe(
+					takeUntil(this.inventoryService.unsubscribe$),
+					map((inventories) => new fromActions.LoadInventorySuccess({ inventories }))
+				);
 		})
 	);
 
@@ -48,9 +50,10 @@ export class InventoryEffect {
 	loadInventoryProducts$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_INVENTORY_SUCCESS),
 		map((action: fromActions.LoadInventorySuccess) => action.payload),
-		concatMap((action) => {
+		switchMap((action) => {
 			return action.inventories.map((inventory) => {
 				return this.inventoryService.getInventoryProducts(inventory.id).pipe(
+					takeUntil(this.inventoryService.unsubscribe$),
 					map((stocks) => {
 						return Object.assign(inventory, { product_stocks: stocks }) as Inventory;
 					}),
@@ -70,7 +73,35 @@ export class InventoryEffect {
 			});
 		}),
 		mergeMap((res) => {
-			return res.pipe(map((inventory) => new fromActions.UpdateInventorySuccess({ inventory })));
+			return res.pipe(
+				takeUntil(this.inventoryService.unsubscribe$),
+				map((inventory) => new fromActions.LoadInventoryProductsSuccess({ inventory }))
+			);
 		})
 	);
+
+	@Effect({ dispatch: false })
+	createInventory$: Observable<Action> = this.actions$.pipe(
+		ofType(fromActions.CREATE_INVENTORY),
+		map((action: fromActions.CreateInventory) => action.payload),
+		switchMap((inventoryData) => {
+			const data = inventoryData.inventory;
+
+			return from(this.inventoryService.createInventory(data)).pipe(
+				mergeMap(() => {
+					return [
+						{
+							type: fromActions.CREATE_INVENTORY_SUCCESS
+						}
+					];
+				})
+			);
+		})
+	);
+
+	constructor(
+		private actions$: Actions,
+		private inventoryService: InventoryService,
+		private store: Store<fromProductManagement.State>
+	) {}
 }

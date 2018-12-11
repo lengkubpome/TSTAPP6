@@ -1,1 +1,4 @@
-<inventory-list [inventories]="inventories$ | async"></inventory-list>
+<inventory-list 
+    [inventories]="inventories$ | async" 
+    (createInventory)="onCreateInventory($event)">
+</inventory-list>
