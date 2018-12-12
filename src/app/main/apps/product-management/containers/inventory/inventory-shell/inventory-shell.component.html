@@ -1,4 +1,6 @@
 <inventory-list 
     [inventories]="inventories$ | async" 
-    (createInventory)="onCreateInventory($event)">
+    (createInventory)="onCreateInventory($event)"
+    (manageInventory)="onManageInventory($event)"
+    >
 </inventory-list>

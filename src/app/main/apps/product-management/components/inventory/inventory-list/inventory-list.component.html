@@ -38,7 +38,7 @@
                         <span class="h2">{{inventory.name}}</span>
                         <span class="secondary-text">{{inventory.description}}</span>
                     </div>
-                    <button mat-icon-button fuseWidgetToggle aria-label="more" [matMenuTriggerFor]="inventoryMenu">
+                    <button mat-icon-button fuseWidgetToggle aria-label="more" [matMenuTriggerFor]="inventoryMenu" >
                         <mat-icon>more_vert</mat-icon>
                     </button>
 
@@ -47,7 +47,7 @@
                     <!-- <button mat-menu-item>
                         <mat-icon>add</mat-icon> <span>Add Product</span>
                     </button> -->
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="onManageInventory(inventory)">
                         <mat-icon >edit</mat-icon> <span>Management</span>
                     </button>
                 </mat-menu>

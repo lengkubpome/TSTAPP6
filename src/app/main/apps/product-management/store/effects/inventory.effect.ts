@@ -1,15 +1,15 @@
+import { Injectable } from '@angular/core';
 import { Inventory } from './../../model/inventory.model';
 import {
 	mergeMap,
 	map,
 	tap,
-	concatMap,
 	withLatestFrom,
 	debounceTime,
 	switchMap,
 	catchError,
-	takeUntil,
-	exhaustMap
+    takeUntil,
+    every
 } from 'rxjs/operators';
 import { InventoryService } from './../../service/inventory.service';
 import { Action, Store, select } from '@ngrx/store';
@@ -18,22 +18,21 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 
 import * as fromActions from '../actions';
 import * as fromProductManagement from '../../product-management.state';
-import { Injectable } from '@angular/core';
-import { delay } from 'q';
-
-const BUSINESS_ID = '0406069000354';
+import * as fromRoute from '@ngrx/router-store';
 
 @Injectable()
 export class InventoryEffect {
 	@Effect()
 	loadInventory$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_INVENTORY),
-		withLatestFrom(this.store.pipe(select(fromProductManagement.getProductManagementState))),
-		// Check Products Store
+		withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
+        every(([ action, storeState ]) => storeState.inventory.ids.length !== 0),
+        // Check Products Store
+        withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
 		tap(([ action, storeState ]) => {
 			if (storeState.products.ids.length === 0) {
-				return this.store.dispatch(new fromActions.LoadProduct());
-			}
+				this.store.dispatch(new fromActions.LoadProduct());
+            }
 		}),
 		debounceTime(1),
 		mergeMap(() => {
@@ -58,7 +57,7 @@ export class InventoryEffect {
 						return Object.assign(inventory, { product_stocks: stocks }) as Inventory;
 					}),
 					// Get Product Name in Product_stocks
-					withLatestFrom(this.store.pipe(select(fromProductManagement.getProductManagementState))),
+					withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
 					map(([ res, storeState ]) => {
 						const products = storeState.products.entities;
 						const product_stocks = res.product_stocks;
@@ -80,7 +79,7 @@ export class InventoryEffect {
 		})
 	);
 
-	@Effect({ dispatch: false })
+	@Effect()
 	createInventory$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.CREATE_INVENTORY),
 		map((action: fromActions.CreateInventory) => action.payload),

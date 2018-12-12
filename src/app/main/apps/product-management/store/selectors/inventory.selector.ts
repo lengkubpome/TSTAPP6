@@ -1,17 +1,24 @@
 import { inventoryAdapter } from './../adapters';
 import { createSelector } from '@ngrx/store';
-import { getProductManagementState, ProductManagementState } from '../../product-management.state';
+import { selectRouterState } from '@app/core';
+import { selectProductManagementState, ProductManagementState } from '../../product-management.state';
 
+import * as fromInventory from '../reducers/inventory.reducer';
 
 export const getInventoryState = createSelector(
-    getProductManagementState,
-    (state: ProductManagementState) => state.inventory
-)
-
+	selectProductManagementState,
+	(state: ProductManagementState) => state.inventory
+);
 
 const { selectIds, selectEntities, selectAll, selectTotal } = inventoryAdapter.getSelectors();
 
-
+export const selectInventoryEntities = createSelector(getInventoryState, selectEntities);
 export const selectAllInventory = createSelector(getInventoryState, selectAll);
 
+// export const selectCurrentInventoryId = createSelector(getInventoryState, fromInventory.getSelectedInventoryId);
 
+export const selectCurrentInventory = createSelector(
+	selectInventoryEntities,
+	selectRouterState,
+	(inventoryEntities, params) => inventoryEntities[params.state.params.id]
+);

@@ -1,6 +1,7 @@
 import { createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
 import { AppState } from '@app/core';
+
 import * as fromProduct from './store/reducers/product.reducer';
 import * as fromInventory from './store/reducers/inventory.reducer';
 
@@ -16,8 +17,8 @@ export interface ProductManagementState {
 }
 
 export const reducers: ActionReducerMap<ProductManagementState> = {
-    products: fromProduct.productReducer,
-    inventory: fromInventory.inventoryReducer
+	products: fromProduct.productReducer,
+	inventory: fromInventory.inventoryReducer
 };
 
-export const getProductManagementState = createFeatureSelector<State, ProductManagementState>(FEATURE_NAME);
+export const selectProductManagementState = createFeatureSelector<State, ProductManagementState>(FEATURE_NAME);

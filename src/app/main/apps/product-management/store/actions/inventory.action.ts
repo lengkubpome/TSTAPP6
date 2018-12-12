@@ -4,7 +4,6 @@ import { Action } from '@ngrx/store';
 
 export const LOAD_INVENTORY = '[Inventory] Load Inventory';
 export const LOAD_INVENTORY_SUCCESS = '[Inventory] Load Inventory Success';
-
 export const LOAD_INVENTORY_PRODUCTS_SUCCESS = '[Inventory] Load Inventory Products Success';
 
 export const CREATE_INVENTORY = '[Inventory] Create Inventory';
@@ -30,6 +29,7 @@ export class CreateInventory implements Action {
 	constructor(public payload: { inventory: Inventory }) {}
 }
 
+// น่าจะไม่ได้ใช้
 export class CreateInventorySuccess implements Action {
 	readonly type = CREATE_INVENTORY_SUCCESS;
 	// constructor(public payload: { inventory: Inventory }) {}
@@ -39,5 +39,5 @@ export type INVENTORY_ACTIONS =
 	| LoadInventory
 	| LoadInventorySuccess
 	| LoadInventoryProductsSuccess
-	| CreateInventory
-	// | CreateInventorySuccess;
+	| CreateInventory;
+// | CreateInventorySuccess;

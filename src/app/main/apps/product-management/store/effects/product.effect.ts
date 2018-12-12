@@ -1,11 +1,14 @@
+import { CustomSerializer } from '@app/core/router/custom-serializer';
 import { Product } from './../../model/product.model';
 import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
 import { Action, Store, select } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, map, mergeMap, catchError, withLatestFrom, tap } from 'rxjs/operators';
+import { switchMap, map, mergeMap, catchError, withLatestFrom, filter, every } from 'rxjs/operators';
 import { ProductService } from '../../service/product.service';
 import { Router } from '@angular/router';
+
+import * as fromRouter from '@ngrx/router-store';
 
 import * as fromActions from '../actions';
 import * as fromProductManagement from '../../product-management.state';
@@ -14,17 +17,12 @@ const BUSINESS_ID = '0406069000354';
 
 @Injectable()
 export class ProductEffect {
-	constructor(
-		private actions$: Actions,
-		private store: Store<fromProductManagement.State>,
-		private productService: ProductService,
-		private router: Router
-	) {}
-
 	@Effect({})
 	loadProducts$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_PRODUCT),
-		mergeMap((action: fromActions.LoadProduct) => {
+		withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
+		every(([ action, storeState ]) => storeState.products.ids.length !== 0),
+		mergeMap(() => {
 			return this.productService
 				.getProducts()
 				.pipe(
@@ -38,7 +36,7 @@ export class ProductEffect {
 	selectProduct$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.SELECT_PRODUCT),
 		map((action: fromActions.SelectProduct) => action.payload),
-		withLatestFrom(this.store.pipe(select(fromProductManagement.getProductManagementState))),
+		withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
 		map(([ payload, storeState ]) => {
 			const productIds = storeState.products.ids as string[];
 			if (productIds.includes(payload.productId)) {
@@ -81,4 +79,11 @@ export class ProductEffect {
 		// 	return new fromActions.CancelEditMode();
 		// })
 	);
+
+	constructor(
+		private actions$: Actions,
+		private store: Store<fromProductManagement.State>,
+		private productService: ProductService,
+		private router: Router
+	) {}
 }

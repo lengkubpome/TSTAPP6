@@ -1,9 +1,4 @@
-import {
-  ActionReducerMap,
-  MetaReducer,
-  createFeatureSelector,
-  ActionReducer
-} from '@ngrx/store';
+import { ActionReducerMap, MetaReducer, createFeatureSelector, ActionReducer } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { storeFreeze } from 'ngrx-store-freeze';
 
@@ -18,38 +13,31 @@ import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 
 export const reducers: ActionReducerMap<AppState> = {
-  auth: authReducer,
-  router: routerReducer
+	auth: authReducer,
+	router: routerReducer
 };
 
 // ngrx-store-logger
 export function logger(reducer: ActionReducer<AppState>): any {
-  // default, no options
-  return storeLogger()(reducer);
+	// default, no options
+	return storeLogger()(reducer);
 }
 
-export const metaReducers: MetaReducer<AppState>[] = [
-  initStateFromLocalStorage
-];
+export const metaReducers: MetaReducer<AppState>[] = [ initStateFromLocalStorage ];
 
 if (!environment.production) {
-  // metaReducers.unshift(storeFreeze);
-  metaReducers.unshift(logger);
-  if (!environment.test) {
-    // metaReducers.unshift(debug);
-  }
+	// metaReducers.unshift(storeFreeze);
+	metaReducers.unshift(logger);
+	if (!environment.test) {
+		// metaReducers.unshift(debug);
+	}
 }
 
-export const selectAuthState = createFeatureSelector<AppState, AuthState>(
-  'auth'
-);
+export const selectAuthState = createFeatureSelector<AppState, AuthState>('auth');
 
-export const selectRouterState = createFeatureSelector<
-  AppState,
-  RouterReducerState<RouterStateUrl>
->('router');
+export const selectRouterState = createFeatureSelector<AppState, RouterReducerState<RouterStateUrl>>('router');
 
 export interface AppState {
-  auth: AuthState;
-  router: RouterReducerState<RouterStateUrl>;
+	auth: AuthState;
+	router: RouterReducerState<RouterStateUrl>;
 }

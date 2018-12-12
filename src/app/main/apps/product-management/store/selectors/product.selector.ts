@@ -1,12 +1,12 @@
 import { createSelector } from '@ngrx/store';
-import { getProductManagementState, ProductManagementState } from '../../product-management.state';
+import { selectProductManagementState, ProductManagementState } from '../../product-management.state';
 
 import { productAdapter } from '../adapters';
 import * as fromProduct from '../reducers/product.reducer';
 
 // From ProductManagement State
 export const getProductState = createSelector(
-	getProductManagementState,
+	selectProductManagementState,
 	(state: ProductManagementState) => state.products
 );
 

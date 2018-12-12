@@ -21,6 +21,7 @@ export class InventoryListComponent implements OnInit, OnDestroy {
 
 	@Input() inventories: Inventory[];
 	@Output() createInventory = new EventEmitter<Inventory>();
+	@Output() manageInventory = new EventEmitter<Inventory>();
 
 	constructor(private inventoryService: InventoryService, public dialog: MatDialog) {}
 
@@ -46,5 +47,9 @@ export class InventoryListComponent implements OnInit, OnDestroy {
 			}
 			this.createInventory.emit(value);
 		});
+	}
+
+	onManageInventory(inventory: Inventory): void {
+		this.manageInventory.emit(inventory);
 	}
 }
