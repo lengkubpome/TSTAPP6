@@ -6,7 +6,7 @@ export interface Product {
 	price?: number;
 	status?: {
 		active: boolean;
-		date_change: Date;
+		updateAt: Date;
 	};
 	inventory_access?: string[];
 }
@@ -21,7 +21,7 @@ export interface ProductHistory {
 		price?: number;
 		status?: {
             active: boolean;
-            date_change: Date;
+            updateAt: Date;
         };
 	};
 }

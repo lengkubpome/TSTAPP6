@@ -20,6 +20,9 @@ export function inventoryReducer(state = initialState, action: fromActions.INVEN
 		case fromActions.LOAD_INVENTORY_PRODUCTS_SUCCESS: {
 			return inventoryAdapter.upsertOne(action.payload.inventory, state);
 		}
+		// case fromActions.CREATE_INVENTORY_SUCCESS: {
+		// 	return inventoryAdapter.addOne(action.payload.inventory, state);
+		// }
 
 		default: {
 			return state;

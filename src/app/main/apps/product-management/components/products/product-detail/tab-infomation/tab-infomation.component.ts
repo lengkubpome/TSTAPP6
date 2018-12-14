@@ -65,9 +65,6 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 	onSaveEditProduct(): void {
 		const data = this.generateEditProduct();
 
-		console.log('ffffffffff');
-		console.log(data);
-
 		this.saveEditProduct.emit(data);
 	}
 
@@ -128,7 +125,7 @@ export class TabInfomationComponent implements OnInit, OnDestroy {
 
 		this.productActive !== this.productInfo.status.active
 			? (data = {
-					status: { active: this.productActive, date_change: new Date(Date.now()) },
+					status: { active: this.productActive, updateAt: new Date(Date.now()) },
 					...this.detailProductForm.value
 				})
 			: (data = {

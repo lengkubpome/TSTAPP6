@@ -10,7 +10,7 @@
 
             </div>
             <div class="pb-16" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                <span>Date Time : {{this.productInfo.status.date_change.toDate() |relativeTimePipe }}</span>
+                <span>Date Time : {{this.productInfo.status.updateAt.toDate() |relativeTimePipe }}</span>
                 <button mat-stroked-button [matMenuTriggerFor]="menu" type="button" [color]="
                 productActive 
                 ? 'accent'

@@ -24,10 +24,12 @@ export class ProductService {
 	}
 
 	getProducts(): Observable<Product[]> {
+        console.log('%c Load data from server!! ', 'background: #fff; color: red');
         return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/products`)
 	}
 
 	getProductHistory(id: string): Observable<ProductHistory[]> {
+        console.log('%c Load data from server!! ', 'background: #fff; color: red');
 		return this.afs
 			.collection(`product_management/${this.BUSINESS_ID}/products/${id}/history`)
 			.snapshotChanges()
@@ -42,6 +44,7 @@ export class ProductService {
 	}
 
 	updateProduct(product: Update<Product>, editor: string): Promise<any> {
+        console.log('%c Send data to server!! ', 'background: #fff; color: red');
 		const batch = this.afs.firestore.batch();
 		const productRef = this.afs.firestore.doc(`product_management/${this.BUSINESS_ID}/products/${product.id}`);
 		const productHistoryRef = this.afs.firestore.doc(

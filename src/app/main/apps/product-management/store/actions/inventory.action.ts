@@ -32,12 +32,12 @@ export class CreateInventory implements Action {
 // น่าจะไม่ได้ใช้
 export class CreateInventorySuccess implements Action {
 	readonly type = CREATE_INVENTORY_SUCCESS;
-	// constructor(public payload: { inventory: Inventory }) {}
+	constructor(public payload: { inventory: Inventory }) {}
 }
 
 export type INVENTORY_ACTIONS =
 	| LoadInventory
 	| LoadInventorySuccess
 	| LoadInventoryProductsSuccess
-	| CreateInventory;
-// | CreateInventorySuccess;
+	| CreateInventory
+	| CreateInventorySuccess;

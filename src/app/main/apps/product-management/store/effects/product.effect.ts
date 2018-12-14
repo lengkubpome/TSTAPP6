@@ -20,9 +20,9 @@ export class ProductEffect {
 	@Effect({})
 	loadProducts$: Observable<Action> = this.actions$.pipe(
 		ofType(fromActions.LOAD_PRODUCT),
-		withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
-		every(([ action, storeState ]) => storeState.products.ids.length !== 0),
-		mergeMap(() => {
+		// withLatestFrom(this.store.pipe(select(fromProductManagement.selectProductManagementState))),
+		// every(([ action, storeState ]) => storeState.products.ids.length !== 0),
+		switchMap(() => {
 			return this.productService
 				.getProducts()
 				.pipe(
