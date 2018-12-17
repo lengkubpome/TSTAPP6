@@ -15,10 +15,10 @@ const { selectIds, selectEntities, selectAll, selectTotal } = inventoryAdapter.g
 export const selectInventoryEntities = createSelector(getInventoryState, selectEntities);
 export const selectAllInventory = createSelector(getInventoryState, selectAll);
 
-// export const selectCurrentInventoryId = createSelector(getInventoryState, fromInventory.getSelectedInventoryId);
+export const selectCurrentInventory = createSelector(getInventoryState, fromInventory.getSelectedInventory);
 
-export const selectCurrentInventory = createSelector(
-	selectInventoryEntities,
-	selectRouterState,
-	(inventoryEntities, params) => inventoryEntities[params.state.params.id]
-);
+// export const selectCurrentInventory = createSelector(
+// 	selectInventoryEntities,
+// 	selectRouterState,
+// 	(inventoryEntities, params) => inventoryEntities[params.state.params.id]
+// );

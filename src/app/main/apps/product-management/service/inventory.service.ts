@@ -27,7 +27,8 @@ export class InventoryService {
 	getInventoryProducts(id: string): Observable<InventoryProduct[]> {
 		console.log('%c Load inventory product from server!! ', 'background: #fff; color: red');
 		return this.db.colWithIds$(`product_management/${this.BUSINESS_ID}/inventory/${id}/product_stocks`);
-	}
+     
+    }
 
 	createInventory(data: Inventory): Promise<any> {
 		console.log('%c Create inventory from server!! ', 'background: #fff; color: red');

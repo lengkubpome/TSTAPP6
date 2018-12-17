@@ -17,8 +17,6 @@ import { takeUntil } from 'rxjs/operators';
 export class InventoryListComponent implements OnInit, OnDestroy {
 	unsubscribe$ = new Subject<void>();
 
-	displayedColumns: string[] = [ 'name', 'stock_type', 'volume', 'amount' ];
-
 	@Input() inventories: Inventory[];
 	@Output() createInventory = new EventEmitter<Inventory>();
 	@Output() manageInventory = new EventEmitter<Inventory>();
@@ -26,7 +24,6 @@ export class InventoryListComponent implements OnInit, OnDestroy {
 	constructor(private inventoryService: InventoryService, public dialog: MatDialog) {}
 
 	ngOnInit(): void {
-		console.log(this.inventories);
 	}
 
 	ngOnDestroy(): void {

@@ -19,11 +19,10 @@ export class InventoryShellComponent implements OnInit, OnDestroy {
 	inventories$: Observable<Inventory[]>;
 
 	constructor(
-        private store: Store<State>,
-        private router: Router,
+		private store: Store<State>,
+		private router: Router,
 		private inventoryService: InventoryService,
-		private subService: SubscriptionService,
-
+		private subService: SubscriptionService
 	) {}
 
 	ngOnInit(): void {
@@ -32,13 +31,14 @@ export class InventoryShellComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-        this.subService.unsubscribeComponent$.next();
-    }
+		this.subService.unsubscribeComponent$.next();
+	}
 
 	onCreateInventory(data: Inventory): void {
 		this.store.dispatch(new fromApp.CreateInventory({ inventory: data }));
 	}
 	onManageInventory(inventory: Inventory): void {
-		this.router.navigate([ '/apps/product-management/inventory', inventory.id ]);
+		this.store.dispatch(new fromApp.SelectInventory({ inventory }));
+		// this.router.navigate([ '/apps/product-management/inventory', inventory.id ]);
 	}
 }

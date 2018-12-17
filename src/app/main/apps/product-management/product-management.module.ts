@@ -29,8 +29,9 @@ import { ProductNewComponent } from './components/products/product-new/product-n
 import { TabInventoryComponent } from './components/products/product-detail/tab-inventory/tab-inventory.component';
 import { InventoryListComponent } from './components/inventory/inventory-list/inventory-list.component';
 import { FormInventoryNewComponent } from './components/inventory/form-inventory-new/form-inventory-new.component';
-import { InventoryDetailComponent } from './components/inventory/inventory-detail/inventory-detail.component';
 import { InventoryDetailShellComponent } from './containers/inventory/inventory-detail-shell/inventory-detail-shell.component';
+import { InventoryDetailTabProductsComponent } from './components/inventory/inventory-detail/inventory-detail-tab-products/inventory-detail-tab-products.component';
+import { InventoryDetailTabInformationComponent } from './components/inventory/inventory-detail/inventory-detail-tab-information/inventory-detail-tab-information.component';
 
 const routes: Routes = [
 	{
@@ -42,7 +43,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'products/:id',
-		component: InventoryDetailComponent,
+		component: ProductsShellComponent,
 		resolve: {
 			// data: EcommerceProductService
 		}
@@ -89,8 +90,9 @@ const routes: Routes = [
 		InventoryShellComponent,
 		InventoryListComponent,
 		FormInventoryNewComponent,
-		InventoryDetailComponent,
-		InventoryDetailShellComponent
+		InventoryDetailShellComponent,
+		InventoryDetailTabProductsComponent,
+		InventoryDetailTabInformationComponent,
 	],
 	providers: [ allProductService ],
 	entryComponents: [ ProductNewComponent, FormInventoryNewComponent ]

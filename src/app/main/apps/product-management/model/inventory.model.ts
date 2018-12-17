@@ -12,9 +12,12 @@ export interface Inventory {
 export interface InventoryProduct {
 	id: string;
 	name?: string;
-	storage_type?: string;
+	// storage_type?: string;
 	balance_stock?: {
 		volume?: number;
 		amount?: number;
+	};
+	property?: {
+		storage_type: string;
 	};
 }

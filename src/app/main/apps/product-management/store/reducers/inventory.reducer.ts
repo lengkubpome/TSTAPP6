@@ -5,11 +5,11 @@ import { Inventory } from '../../model/inventory.model';
 import * as fromActions from '../actions';
 
 export interface InventoryState extends EntityState<Inventory> {
-	selectedInventoryId: string | null;
+	selectedInventory: Inventory | null;
 }
 
 const initialState: InventoryState = inventoryAdapter.getInitialState({
-	selectedInventoryId: null
+	selectedInventory: null
 });
 
 export function inventoryReducer(state = initialState, action: fromActions.INVENTORY_ACTIONS): InventoryState {
@@ -19,6 +19,10 @@ export function inventoryReducer(state = initialState, action: fromActions.INVEN
 		}
 		case fromActions.LOAD_INVENTORY_PRODUCTS_SUCCESS: {
 			return inventoryAdapter.upsertOne(action.payload.inventory, state);
+		}
+
+		case fromActions.SELECTED_INVENTORY: {
+			return Object.assign(state, { selectedInventory: action.payload.inventory });
 		}
 		// case fromActions.CREATE_INVENTORY_SUCCESS: {
 		// 	return inventoryAdapter.addOne(action.payload.inventory, state);
@@ -30,4 +34,4 @@ export function inventoryReducer(state = initialState, action: fromActions.INVEN
 	}
 }
 
-export const getSelectedInventoryId = (state: InventoryState) => state.selectedInventoryId;
+export const getSelectedInventory = (state: InventoryState) => state.selectedInventory;
