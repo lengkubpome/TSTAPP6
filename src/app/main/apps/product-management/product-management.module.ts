@@ -17,7 +17,7 @@ import { RelativeTimePipe } from '@app/shared/pipes/relative-time.pipe';
 import { allProductService } from './service';
 
 // container
-import { InventoryShellComponent } from './containers/inventory/inventory-shell/inventory-shell.component';
+import { InventoryListShellComponent } from './containers/inventory/inventory-list-shell/inventory-list-shell.component';
 import { ProductsShellComponent } from './containers/products/products-shell/products-shell.component';
 // component
 import { ProductListComponent } from './components/products/product-list/product-list.component';
@@ -29,9 +29,11 @@ import { ProductNewComponent } from './components/products/product-new/product-n
 import { TabInventoryComponent } from './components/products/product-detail/tab-inventory/tab-inventory.component';
 import { InventoryListComponent } from './components/inventory/inventory-list/inventory-list.component';
 import { FormInventoryNewComponent } from './components/inventory/form-inventory-new/form-inventory-new.component';
-import { InventoryDetailShellComponent } from './containers/inventory/inventory-detail-shell/inventory-detail-shell.component';
-import { InventoryDetailTabProductsComponent } from './components/inventory/inventory-detail/inventory-detail-tab-products/inventory-detail-tab-products.component';
-import { InventoryDetailTabInformationComponent } from './components/inventory/inventory-detail/inventory-detail-tab-information/inventory-detail-tab-information.component';
+import { InventoryDetailShellComponent } from './containers/inventory/inventory-detail.shell/inventory-detail-shell.component';
+import { InventoryDetailProductStocksComponent } from './components/inventory/inventory-detail/inventory-detail-product_stocks/inventory-detail-product-stocks.component';
+import { InventoryDetailInformationComponent } from './components/inventory/inventory-detail/inventory-detail-information/inventory-detail-information.component';
+import { InventoryDetailProductStockComponent } from './components/inventory/inventory-detail/inventory-detail-product-stock/inventory-detail-product-stock.component';
+import { InventoryDetailComponent } from './components/inventory/inventory-detail/inventory-detail.component';
 
 const routes: Routes = [
 	{
@@ -50,7 +52,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'inventory',
-		component: InventoryShellComponent,
+		component: InventoryListShellComponent,
 		resolve: {
 			// data: EcommerceProductsService
 		}
@@ -79,7 +81,7 @@ const routes: Routes = [
 		RelativeTimePipe,
 
 		//  Components
-		InventoryShellComponent,
+		InventoryListShellComponent,
 		ProductListComponent,
 		ProductDetailComponent,
 		TabPriceHistoryComponent,
@@ -87,14 +89,15 @@ const routes: Routes = [
 		ProductsShellComponent,
 		ProductNewComponent,
 		TabInventoryComponent,
-		InventoryShellComponent,
 		InventoryListComponent,
 		FormInventoryNewComponent,
 		InventoryDetailShellComponent,
-		InventoryDetailTabProductsComponent,
-		InventoryDetailTabInformationComponent,
+		InventoryDetailProductStocksComponent,
+		InventoryDetailInformationComponent,
+		InventoryDetailProductStockComponent,
+		InventoryDetailComponent
 	],
 	providers: [ allProductService ],
-	entryComponents: [ ProductNewComponent, FormInventoryNewComponent ]
+	entryComponents: [ ProductNewComponent, FormInventoryNewComponent, InventoryDetailProductStockComponent ]
 })
 export class ProductManagementModule {}

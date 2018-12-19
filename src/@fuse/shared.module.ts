@@ -38,7 +38,8 @@ import {
 	MatSlideToggleModule,
 	MatDialogModule,
 	MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -77,6 +78,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 		MatDialogModule,
         MatToolbarModule,
         MatCardModule,
+        MatListModule,
 
 		MatMomentDateModule,
 
@@ -116,6 +118,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 		MatDialogModule,
         MatToolbarModule,
         MatCardModule,
+        MatListModule,
 
 		MatMomentDateModule,
 

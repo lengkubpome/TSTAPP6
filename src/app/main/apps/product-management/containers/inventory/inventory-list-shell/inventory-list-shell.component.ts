@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { InventoryService } from './../../../service/inventory.service';
+import { InventoryService } from '../../../service/inventory.service';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -12,10 +12,10 @@ import { Inventory } from '../../../model/inventory.model';
 import { SubscriptionService } from '@app/shared/services/subscription.service';
 
 @Component({
-	selector: 'app-inventory-shell',
-	templateUrl: './inventory-shell.component.html'
+	selector: 'app-inventory-list-shell',
+	templateUrl: './inventory-list-shell.component.html'
 })
-export class InventoryShellComponent implements OnInit, OnDestroy {
+export class InventoryListShellComponent implements OnInit, OnDestroy {
 	inventories$: Observable<Inventory[]>;
 
 	constructor(

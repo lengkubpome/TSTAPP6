@@ -1,0 +1,102 @@
+<fuse-widget class="dialog-content-wrapper widget">
+    <!-- <mat-toolbar matDialogTitle class="mat-accent m-0">
+                <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+                    <span class="title dialog-title">Inventory Product</span>
+                </mat-toolbar-row>
+        
+            </mat-toolbar> -->
+
+    <div class="px-16 py-8 border-bottom" fxLayout="row" fxLayoutAlign="space-between center" (mouseenter)="showIconSettings=true"
+        (mouseleave)="showIconSettings=false">
+
+        <!-- <div class="h3 my-20">Name</div> -->
+        <!-- <div class="h3 text-bold pr-16">กระดาษกล่อง</div> -->
+        <div class="h2 my-12 text-bold">กระดาษกล่อง</div>
+        <div *ngIf="showIconSettings && !editMode">
+            <button mat-icon-button [disableRipple]="false" (click)="editMode=true">
+                <mat-icon>settings</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <div class="element-row px-16 py-8" fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <div class="h3">Status</div>
+            <div>
+                <span class="secondary-text">update at :</span>
+                <span>12/12/18</span>
+            </div>
+        </div>
+        <div *ngIf="!editMode" >
+                <div class="h3 text-bold pr-16 my-16">{{selectedStatus}}</div>
+            </div>
+        <mat-form-field *ngIf="editMode" >
+            <mat-select class="simplified text-bold" [(ngModel)]="selectedStatus">
+                <mat-option *ngFor="let type of statusType" [value]="type.value">
+                    {{type.text}}
+                </mat-option>
+
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="element-row px-16 py-8" fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <div class="h3">Storage Type</div>
+        </div>
+        <div *ngIf="!editMode" >
+            <div class="h3 text-bold pr-16 my-16">{{selectedStorage}}</div>
+        </div>
+
+        <mat-form-field *ngIf="editMode" >
+                <mat-select class="simplified text-bold" [(ngModel)]="selectedStorage">
+                    <mat-option *ngFor="let type of storageType" [value]="type.value">
+                        {{type.text}}
+                    </mat-option>
+    
+                </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="element-row px-16 py-8" fxLayout="row" fxLayoutAlign="space-between start">
+        <div>
+            <div class="h3">Balance</div>
+
+        </div>
+        <div fxLayout="column" fxLayoutGap="15px">
+            <div>
+                <span class="secondary-text">Volume</span>
+                <div class="h3 text-bold pr-16">23,000</div>
+
+            </div>
+            <div>
+                <span class="secondary-text">Amount</span>
+                <div class="h3 text-bold pr-16">23,000</div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button mat-button class="mr-8" type="button" 
+        *ngIf="!editMode" 
+        (click)="matDialogRef.close()" aria-label="Close dialog">
+            Close
+        </button>
+        <button mat-button class="mr-8" type="button"
+        *ngIf="editMode" 
+        (click)="editMode=false" >
+            Cancel
+        </button>
+
+        <button mat-button type="submit" class="mr-8" color="accent"
+        *ngIf="editMode" 
+        (click)="onSaveEdited()">
+            Save
+        </button>
+
+    </div>
+
+</fuse-widget>

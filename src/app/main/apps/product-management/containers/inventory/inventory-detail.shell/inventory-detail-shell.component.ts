@@ -1,39 +1,31 @@
-import { Inventory } from './../../../model/inventory.model';
+import { Inventory } from '../../../model/inventory.model';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 
-import { State } from './../../../product-management.state';
+import { State } from '../../../product-management.state';
 import * as fromStore from '../../../store';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 @Component({
-	selector: 'app-inventory-detail-shell',
+	selector: 'app-inventory-shell',
 	templateUrl: './inventory-detail-shell.component.html',
-	styleUrls: [ './inventory-detail-shell.component.scss' ],
 	encapsulation: ViewEncapsulation.None,
 	animations: fuseAnimations
 })
 export class InventoryDetailShellComponent implements OnInit, OnDestroy {
 	unsubscribe$ = new Subject<void>();
-	_inventory: Inventory;
 	inventory$: Observable<Inventory>;
 
-	constructor(private store: Store<State>, private route: ActivatedRoute, private router: Router) {}
+	constructor(private store: Store<State>, private route: ActivatedRoute, private router: Router) {
+		// Check URL
+		this.store.pipe(take(1), select(fromStore.selectCurrentInventory)).subscribe((inventory) => {
+			if (!inventory) this.onGoBack();
+		});
+	}
 
 	ngOnInit(): void {
-		// Check URL
-		this.store
-			.pipe(takeUntil(this.unsubscribe$), select(fromStore.selectCurrentInventory))
-			.subscribe((inventory) => {
-				if (!inventory) {
-					this.onGoBack();
-				}
-		        this._inventory = inventory;
-
-			});
-
 		this.inventory$ = this.store.pipe(select(fromStore.selectCurrentInventory));
 	}
 
