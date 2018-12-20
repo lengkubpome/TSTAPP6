@@ -1,10 +1,8 @@
-import { InventoryDetailProductStockComponent } from './../inventory-detail-product-stock/inventory-detail-product-stock.component';
+import { InventoryProduct } from './../../../../model/inventory.model';
 import { Inventory } from '../../../../model/inventory.model';
 import { fuseAnimations } from '@fuse/animations';
 import { Subject, Observable } from 'rxjs';
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { InventoryProduct } from '@app/main/apps/product-management/model/inventory.model';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'inventory-detail-product-stocks',
@@ -15,19 +13,18 @@ import { MatDialog } from '@angular/material';
 })
 export class InventoryDetailProductStocksComponent implements OnInit {
 	unsubscribe$ = new Subject<void>();
-	
 
 	@Input() inventory$: Observable<Inventory>;
+	@Output() selectProductStock = new EventEmitter<Inventory>();
 
 	displayedColumns: string[] = [ 'name', 'storage_type', 'volume', 'amount', 'property' ];
 
-	constructor(public dialog: MatDialog) {}
+	constructor() {}
 
 	ngOnInit(): void {}
 
-	onSelectProductStock(): void {
-		const dialogRef = this.dialog.open(InventoryDetailProductStockComponent, {
-			panelClass: 'product-stock-form-dialog'
-		});
+	onSelectProductStock(productStock: InventoryProduct): void {
+        this.selectProductStock.emit(productStock);
+        
 	}
 }

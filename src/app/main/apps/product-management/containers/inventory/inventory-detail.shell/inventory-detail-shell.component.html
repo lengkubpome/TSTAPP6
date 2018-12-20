@@ -1,4 +1,6 @@
 <inventory-detail
     [inventory$]="inventory$" 
-    (goBack)="onGoBack()">
+    (goBack)="onGoBack()"
+    (selectProductStock)="onSelectProductStock($event)"
+    >
 </inventory-detail>

@@ -1,0 +1,41 @@
+@import "src/@fuse/scss/fuse";
+
+
+.product-stock-form-dialog {
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+
+    @include media-breakpoint('gt-xs') {
+        width: 450px;
+    }
+
+    .mat-dialog-container {
+        padding: 0;
+
+        .mat-toolbar {
+            flex: 1 0 auto;
+            min-height: initial;
+        }
+
+        .toolbar-bottom {
+            height: auto;
+        }
+    }
+
+    .dialog-content-wrapper {
+        padding: 0;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+
+        .element-row:hover {
+            background: #f5f5f5;
+        }
+
+        .element-row:active {
+            background: #efefef;
+        }
+    }
+}

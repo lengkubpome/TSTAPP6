@@ -1,4 +1,4 @@
-import { Inventory } from '../../../model/inventory.model';
+import { Inventory, InventoryProduct } from '../../../model/inventory.model';
 import { fuseAnimations } from '@fuse/animations';
 import { Store } from '@ngrx/store';
 import { Component, OnInit, OnDestroy, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
@@ -17,6 +17,7 @@ import { Subject, Observable } from 'rxjs';
 export class InventoryDetailComponent implements OnInit {
 	@Input() inventory$: Observable<Inventory>;
 	@Output() goBack = new EventEmitter<void>();
+	@Output() selectProductStock = new EventEmitter<InventoryProduct>();
 
 	constructor(private store: Store<State>) {}
 
@@ -24,5 +25,9 @@ export class InventoryDetailComponent implements OnInit {
 
 	onGoBack(): void {
 		this.goBack.emit();
+	}
+
+	onSelectProductStock(productStock: InventoryProduct): void {
+		this.selectProductStock.emit(productStock);
 	}
 }

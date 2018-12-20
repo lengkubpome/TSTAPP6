@@ -56,7 +56,10 @@
 
             <mat-tab label="Products">
                 <div class="p-24">
-                    <inventory-detail-product-stocks [inventory$]="inventory$"></inventory-detail-product-stocks>
+                    <inventory-detail-product-stocks 
+                    [inventory$]="inventory$"
+                    (selectProductStock)="onSelectProductStock($event)"
+                    ></inventory-detail-product-stocks>
                 </div>
             </mat-tab>
 
